@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a0533">
+<title>Tap & Learn! 🌟</title>
+<style>
+:root {
+  --font:'Nunito','Comic Sans MS',cursive;
+  --radius:20px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{
+  height:100%;width:100%;
+  overflow:hidden;
+  font-family:var(--font);
+  background:#0d001f;
+  color:#fff;
+  touch-action:manipulation;
+  -webkit-text-size-adjust:100%;
+}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite;animation-delay:var(--dl,0s);}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
+
+.screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;
+  z-index:10;
+  overflow:hidden;
+  padding-top:var(--safe-top);
+  padding-bottom:var(--safe-bottom);
+}
+.screen.hidden{display:none!important;}
+/* Home and gameover can scroll if needed */
+#home, #gameover { overflow-y:auto; -webkit-overflow-scrolling:touch; }
+
+/* ========= HOME ========= */
+#home{
+  background:radial-gradient(ellipse at 40% 20%,#3b0a7e 0%,#1a0533 60%,#0d001f 100%);
+  padding:16px 14px 24px;
+  gap:0;
+  justify-content:flex-start;
+}
+.home-header{text-align:center;margin-bottom:10px;flex-shrink:0;}
+.home-logo{
+  font-size:clamp(2.4rem,12vw,5rem);
+  animation:float 3s ease-in-out infinite;
+  display:block;
+  filter:drop-shadow(0 0 20px rgba(236,72,153,.8));
+}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-12px) rotate(4deg)}}
+.home-title{
+  font-size:clamp(1.5rem,7vw,2.8rem);
+  font-weight:900;
+  background:linear-gradient(135deg,#F59E0B,#EC4899,#7C3AED);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:-1px;
+}
+.home-sub{font-size:clamp(.78rem,3.2vw,1rem);color:rgba(255,255,255,.55);margin-top:2px;}
+.hi-row{display:flex;gap:6px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;flex-shrink:0;}
+.hi-pill{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:40px;
+  padding:5px 12px;
+  font-size:.75rem;font-weight:800;
+}
+.section-label{
+  font-size:.68rem;text-transform:uppercase;letter-spacing:3px;
+  color:rgba(255,255,255,.4);margin-bottom:7px;text-align:center;flex-shrink:0;
+}
+.cat-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  width:100%;max-width:480px;
+  margin-bottom:14px;
+  flex-shrink:0;
+}
+.cat-card{
+  border:none;border-radius:18px;
+  padding:11px 7px;
+  cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s;
+  font-family:var(--font);position:relative;overflow:hidden;
+}
+.cat-card:active{transform:scale(.91);}
+.cat-card.selected{box-shadow:0 0 0 3px #fff,0 0 20px rgba(255,255,255,.4);transform:scale(1.03);}
+.cat-icon{font-size:clamp(1.6rem,7vw,2.6rem);line-height:1;}
+.cat-name{font-size:clamp(.72rem,2.8vw,.92rem);font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.4);}
+.cat-name-mr{font-size:clamp(.6rem,2.2vw,.75rem);color:rgba(255,255,255,.75);font-weight:700;}
+.cat-count{font-size:.62rem;color:rgba(255,255,255,.6);}
+.cat-check{position:absolute;top:6px;right:6px;font-size:.9rem;opacity:0;transition:opacity .2s;}
+.cat-card.selected .cat-check{opacity:1;}
+.btn-back{
+  background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);color:#fff;
+  border-radius:50px;padding:6px 13px;
+  font-size:clamp(.72rem,2.8vw,.9rem);font-weight:800;
+  cursor:pointer;font-family:var(--font);transition:all .2s;
+  display:flex;align-items:center;gap:4px;white-space:nowrap;
+}
+.btn-back:active{transform:scale(.93);background:rgba(255,255,255,.22);}
+.btn-play{
+  background:linear-gradient(135deg,#EC4899,#7C3AED);
+  color:#fff;border:none;border-radius:60px;
+  padding:15px 44px;
+  font-size:clamp(1.1rem,5vw,1.5rem);font-weight:900;
+  cursor:pointer;letter-spacing:1px;
+  box-shadow:0 8px 28px rgba(236,72,153,.5);
+  transition:transform .15s,box-shadow .15s;
+  font-family:var(--font);flex-shrink:0;
+}
+.btn-play:active{transform:scale(.94);}
+.btn-play:hover{transform:scale(1.04);}
+
+/* ========= GAME ========= */
+#game{
+  justify-content:flex-start;
+  padding:10px 10px 12px;
+  gap:6px;
+  height:100%;
+  overflow:hidden;
+}
+.top-bar{
+  display:flex;width:100%;max-width:520px;
+  justify-content:space-between;align-items:center;
+  gap:5px;flex-shrink:0;flex-wrap:nowrap;
+}
+.stat-pill{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:50px;
+  padding:5px 10px;
+  font-size:clamp(.68rem,2.5vw,.88rem);font-weight:800;white-space:nowrap;
+}
+.timer-wrap{
+  width:100%;max-width:520px;
+  background:rgba(255,255,255,.1);
+  border-radius:20px;height:8px;
+  overflow:hidden;flex-shrink:0;
+}
+#timer-bar{
+  height:100%;border-radius:20px;width:100%;
+  background:linear-gradient(90deg,#10B981,#F59E0B,#EF4444);
+  transition:width linear;
+}
+
+/* Instruction card */
+.instr-card{
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:18px;
+  padding:10px 16px;
+  text-align:center;
+  width:100%;max-width:520px;
+  flex-shrink:0;
+}
+.instr-label{
+  font-size:clamp(.62rem,2vw,.76rem);text-transform:uppercase;
+  letter-spacing:3px;color:rgba(255,255,255,.45);margin-bottom:2px;
+}
+#instr-text{
+  font-size:clamp(1.1rem,5vw,2rem);font-weight:900;line-height:1.2;
+}
+#instr-marathi{
+  font-size:clamp(.75rem,3vw,1.1rem);color:rgba(255,255,255,.75);
+  font-weight:700;margin-top:2px;
+}
+#speak-btn{
+  margin-top:5px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:30px;
+  padding:4px 14px;
+  color:#fff;font-size:clamp(.7rem,2.5vw,.9rem);
+  font-weight:800;font-family:var(--font);
+  cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  transition:background .2s;
+}
+#speak-btn:active{background:rgba(255,255,255,.3);}
+
+#feedback{
+  font-size:clamp(.95rem,3.8vw,1.5rem);font-weight:900;
+  text-align:center;min-height:1.8rem;
+  text-shadow:0 2px 10px rgba(0,0,0,.4);flex-shrink:0;
+}
+#item-grid{
+  display:grid;
+  gap:clamp(10px,2.5vw,16px);
+  width:100%;max-width:480px;
+  flex:1;
+  min-height:0;
+  align-content:center;
+  grid-auto-rows:auto;
+}
+.grid-3{grid-template-columns:1fr 1fr;}
+.grid-2{grid-template-columns:1fr 1fr;}
+
+/* Item buttons — nice card shape */
+.item-btn{
+  border:none;border-radius:var(--radius);
+  cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  aspect-ratio:3/2;
+  width:100%;
+  box-shadow:0 6px 18px rgba(0,0,0,.35),0 0 0 2px rgba(255,255,255,.1) inset;
+  transition:transform .12s cubic-bezier(.34,1.56,.64,1),box-shadow .12s;
+  font-family:var(--font);gap:5px;
+  position:relative;overflow:hidden;
+  padding:10px 8px;
+}
+.item-btn:active{transform:scale(.88)!important;}
+.item-emoji{
+  font-size:clamp(2.4rem,9vh,5rem);
+  line-height:1;display:block;pointer-events:none;
+  flex-shrink:0;
+}
+.item-name{
+  font-size:clamp(.95rem,4vw,1.4rem);font-weight:900;color:#fff;
+  pointer-events:none;text-shadow:0 2px 6px rgba(0,0,0,.45);
+  text-align:center;padding:0 4px;line-height:1.15;
+}
+.item-name-mr{
+  font-size:clamp(.8rem,3.2vw,1.1rem);
+  color:rgba(255,255,255,.9);
+  font-weight:700;pointer-events:none;
+  text-align:center;padding:0 4px;line-height:1.1;
+}
+
+/* Theme gradients */
+.t0{background:linear-gradient(145deg,#f6d365,#fda085)}.t1{background:linear-gradient(145deg,#a18cd1,#fbc2eb)}
+.t2{background:linear-gradient(145deg,#43e97b,#38f9d7)}.t3{background:linear-gradient(145deg,#4facfe,#00f2fe)}
+.t4{background:linear-gradient(145deg,#f77062,#fe5196)}.t5{background:linear-gradient(145deg,#fddb92,#b5fffc)}
+.t6{background:linear-gradient(145deg,#96fbc4,#f9f586)}.t7{background:linear-gradient(145deg,#f093fb,#f5576c)}
+.t8{background:linear-gradient(145deg,#c471f5,#fa71cd)}.t9{background:linear-gradient(145deg,#30cfd0,#667eea)}
+.t10{background:linear-gradient(145deg,#84fab0,#8fd3f4)}.t11{background:linear-gradient(145deg,#ffecd2,#fcb69f)}
+.t12{background:linear-gradient(145deg,#e0c3fc,#8ec5fc)}.t13{background:linear-gradient(145deg,#f5f7fa,#c3cfe2)}
+.t14{background:linear-gradient(145deg,#fbc2eb,#a6c1ee)}.t15{background:linear-gradient(145deg,#fddb92,#d1fdff)}
+
+/* Streak */
+#streak-wrap{
+  position:fixed;right:8px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:4px;z-index:50;
+}
+.s-pip{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,transform .3s;}
+.s-pip.lit{background:#F59E0B;transform:scale(1.4);box-shadow:0 0 8px #F59E0B;}
+
+/* Level badge */
+.lvl-badge{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+  background:linear-gradient(135deg,#F59E0B,#EF4444);
+  color:#fff;border-radius:22px;padding:16px 28px;text-align:center;
+  z-index:200;pointer-events:none;box-shadow:0 20px 60px rgba(0,0,0,.5);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.lvl-badge.show{transform:translate(-50%,-50%) scale(1);}
+.lbi{font-size:2.4rem}.lbt{font-size:.9rem;font-weight:900;opacity:.8;margin-top:2px}
+.lbn{font-size:2rem;font-weight:900;line-height:1}
+
+/* Animations */
+@keyframes popBounce{0%{transform:scale(1)}25%{transform:scale(1.18) rotate(-3deg)}55%{transform:scale(1.08) rotate(2deg)}100%{transform:scale(1)}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 6px 18px rgba(0,0,0,.35)}50%{box-shadow:0 0 0 5px rgba(16,185,129,.5),0 0 30px rgba(16,185,129,.6)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-11px)}40%{transform:translateX(11px)}60%{transform:translateX(-8px)}80%{transform:translateX(8px)}}
+@keyframes popIn{from{transform:scale(.45) rotate(-10deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes confFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.anim-correct{animation:popBounce .5s cubic-bezier(.34,1.56,.64,1),pulseGlow .5s ease;}
+.anim-wrong{animation:shake .5s ease;}
+.anim-in{animation:popIn .38s cubic-bezier(.34,1.56,.64,1) both;}
+.confetti-piece{position:fixed;top:-10px;border-radius:3px;pointer-events:none;z-index:100;animation:confFall var(--dur,2.5s) var(--dl,0s) linear forwards;}
+
+/* Game Over */
+#gameover{
+  justify-content:center;gap:14px;
+  background:radial-gradient(ellipse at center,#1a0533 0%,#0d001f 100%);
+  padding:20px 16px;
+}
+.go-emoji{font-size:clamp(3rem,14vw,5.5rem);animation:float 3s ease-in-out infinite;}
+.go-title{font-size:clamp(1.7rem,7vw,3rem);font-weight:900;text-align:center;}
+.go-box{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:18px;padding:16px 28px;text-align:center;
+  width:100%;max-width:300px;
+}
+.go-label{font-size:.78rem;text-transform:uppercase;letter-spacing:3px;opacity:.45;}
+.go-val{font-size:clamp(2.4rem,10vw,4rem);font-weight:900;line-height:1;}
+.go-best{font-size:.88rem;opacity:.55;margin-top:3px;}
+.go-newbest{color:#F59E0B;font-weight:900;font-size:.95rem;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.btn-sec{
+  background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:60px;padding:12px 22px;
+  font-size:clamp(.85rem,3.4vw,1.1rem);font-weight:900;
+  cursor:pointer;font-family:var(--font);transition:all .2s;
+}
+.btn-sec:hover{background:rgba(255,255,255,.18);}
+.btn-sec:active{transform:scale(.93);}
+
+/* TTS indicator */
+.speaking-pulse {
+  animation: speakPulse .4s ease-in-out infinite alternate;
+}
+@keyframes speakPulse {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.5) drop-shadow(0 0 8px gold); }
+}
+
+/* Mobile height fixes */
+@media (max-height: 700px) {
+  .instr-card { padding: 7px 12px; }
+  #instr-text { font-size: clamp(.9rem,4vw,1.4rem); }
+  #instr-marathi { font-size: clamp(.68rem,2.6vw,.95rem); }
+  #speak-btn { margin-top:3px; padding:3px 10px; font-size:.72rem; }
+  #feedback { min-height:1.4rem; font-size:clamp(.82rem,3.2vw,1.2rem); }
+  .home-logo { font-size: clamp(1.8rem,9vw,3rem); }
+  #game { padding: 7px 8px 8px; gap:4px; }
+  .stat-pill { padding:4px 8px; font-size:clamp(.6rem,2.2vw,.8rem); }
+}
+@media (max-height: 560px) {
+  #instr-marathi { display: none; }
+  #speak-btn { display:none; }
+  .item-name-mr { display: none; }
+  .item-emoji { font-size: clamp(1.5rem,5.5vh,3rem); }
+  #game { gap:3px; }
+}
+@media (max-height: 460px) {
+  .instr-card { padding:5px 10px; }
+  .instr-label { display:none; }
+}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div class="lvl-badge" id="lvl-badge">
+  <div class="lbi">🌟</div>
+  <div class="lbt">LEVEL UP!</div>
+  <div class="lbn" id="badge-num">2</div>
+</div>
+
+<!-- HOME -->
+<div class="screen" id="home">
+  <div class="home-header">
+    <span class="home-logo">🌟</span>
+    <div class="home-title">Tap &amp; Learn!</div>
+    <div class="home-sub">टॅप करा — शिका — मज्जा करा! 🎉</div>
+  </div>
+  <div class="hi-row" id="hi-row"></div>
+  <div class="section-label">एक विषय निवडा • Choose a Category</div>
+  <div class="cat-grid" id="cat-grid"></div>
+  <button class="btn-play" id="btn-start">▶ खेळूया!</button>
+</div>
+
+<!-- GAME -->
+<div class="screen hidden" id="game">
+  <div class="top-bar">
+    <button class="btn-back" id="btn-back-game">◀ परत</button>
+    <div class="stat-pill">⭐ <span id="score-val">0</span></div>
+    <div class="stat-pill">Lvl <span id="level-val">1</span></div>
+    <div class="stat-pill" id="cat-badge-pill">🐾</div>
+    <div class="stat-pill" id="lives-pill"></div>
+  </div>
+  <div class="timer-wrap"><div id="timer-bar"></div></div>
+  <div class="instr-card">
+    <div class="instr-label">🔍 शोधा • Find It!</div>
+    <div id="instr-text">Find the <span id="target-name">?</span></div>
+    <div id="instr-marathi">मराठी: <span id="target-marathi">?</span></div>
+    <button id="speak-btn">🔊 ऐका • Listen</button>
+  </div>
+  <div id="feedback">&nbsp;</div>
+  <div id="item-grid" class="grid-3"></div>
+</div>
+
+<!-- GAME OVER -->
+<div class="screen hidden" id="gameover">
+  <div class="go-emoji" id="go-emoji">😢</div>
+  <div class="go-title" id="go-title">Game Over!</div>
+  <div class="go-box">
+    <div class="go-label">तुमचा स्कोर • Your Score</div>
+    <div class="go-val" id="go-score">0</div>
+    <div class="go-best" id="go-best">Best: 0</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn-sec" id="btn-home">🏠 घर</button>
+    <button class="btn-play" id="btn-retry" style="padding:12px 22px;font-size:clamp(.85rem,3.4vw,1.1rem)">🔄 परत खेळा</button>
+  </div>
+</div>
+<div id="streak-wrap"></div>
+
+<script>
+/* =====================================================================
+   MARATHI TRANSLATIONS — added to each item
+===================================================================== */
+const CATEGORIES = [
+  {
+    id:'animals', name:'Animals', nameMr:'प्राणी', icon:'🐾',
+    color:'linear-gradient(145deg,#f6d365,#fda085)',
+    items:[
+      {id:'a1',label:'Dog',mr:'कुत्रा',emoji:'🐶',theme:1},
+      {id:'a2',label:'Cat',mr:'मांजर',emoji:'🐱',theme:2},
+      {id:'a3',label:'Lion',mr:'सिंह',emoji:'🦁',theme:3},
+      {id:'a4',label:'Tiger',mr:'वाघ',emoji:'🐯',theme:0},
+      {id:'a5',label:'Elephant',mr:'हत्ती',emoji:'🐘',theme:4},
+      {id:'a6',label:'Monkey',mr:'माकड',emoji:'🐒',theme:7},
+      {id:'a7',label:'Cow',mr:'गाय',emoji:'🐄',theme:5},
+      {id:'a8',label:'Horse',mr:'घोडा',emoji:'🐴',theme:8},
+      {id:'a9',label:'Pig',mr:'डुक्कर',emoji:'🐷',theme:4},
+      {id:'a10',label:'Rabbit',mr:'ससा',emoji:'🐰',theme:14},
+      {id:'a11',label:'Bear',mr:'अस्वल',emoji:'🐻',theme:10},
+      {id:'a12',label:'Panda',mr:'पांडा',emoji:'🐼',theme:13},
+      {id:'a13',label:'Koala',mr:'कोआला',emoji:'🐨',theme:12},
+      {id:'a14',label:'Frog',mr:'बेडूक',emoji:'🐸',theme:2},
+      {id:'a15',label:'Duck',mr:'बदक',emoji:'🦆',theme:6},
+      {id:'a16',label:'Chick',mr:'पिल्लू',emoji:'🐥',theme:5},
+      {id:'a17',label:'Penguin',mr:'पेंग्विन',emoji:'🐧',theme:3},
+      {id:'a18',label:'Owl',mr:'घुबड',emoji:'🦉',theme:9},
+      {id:'a19',label:'Eagle',mr:'गरुड',emoji:'🦅',theme:11},
+      {id:'a20',label:'Parrot',mr:'पोपट',emoji:'🦜',theme:2},
+      {id:'a21',label:'Flamingo',mr:'फ्लेमिंगो',emoji:'🦩',theme:7},
+      {id:'a22',label:'Peacock',mr:'मोर',emoji:'🦚',theme:9},
+      {id:'a23',label:'Swan',mr:'हंस',emoji:'🦢',theme:13},
+      {id:'a24',label:'Rooster',mr:'कोंबडा',emoji:'🐓',theme:0},
+      {id:'a25',label:'Turkey',mr:'टर्की',emoji:'🦃',theme:11},
+      {id:'a26',label:'Crocodile',mr:'मगर',emoji:'🐊',theme:2},
+      {id:'a27',label:'Turtle',mr:'कासव',emoji:'🐢',theme:6},
+      {id:'a28',label:'Snake',mr:'साप',emoji:'🐍',theme:9},
+      {id:'a29',label:'Lizard',mr:'सरडा',emoji:'🦎',theme:6},
+      {id:'a30',label:'Dragon',mr:'ड्रॅगन',emoji:'🐉',theme:4},
+      {id:'a31',label:'Whale',mr:'व्हेल',emoji:'🐋',theme:3},
+      {id:'a32',label:'Dolphin',mr:'डॉल्फिन',emoji:'🐬',theme:3},
+      {id:'a33',label:'Shark',mr:'शार्क',emoji:'🦈',theme:9},
+      {id:'a34',label:'Fish',mr:'मासा',emoji:'🐟',theme:3},
+      {id:'a35',label:'Octopus',mr:'ऑक्टोपस',emoji:'🐙',theme:8},
+      {id:'a36',label:'Crab',mr:'खेकडा',emoji:'🦀',theme:4},
+      {id:'a37',label:'Butterfly',mr:'फुलपाखरू',emoji:'🦋',theme:7},
+      {id:'a38',label:'Bee',mr:'मधमाशी',emoji:'🐝',theme:5},
+      {id:'a39',label:'Ladybug',mr:'लेडीबग',emoji:'🐞',theme:4},
+      {id:'a40',label:'Fox',mr:'कोल्हा',emoji:'🦊',theme:0},
+      {id:'a41',label:'Wolf',mr:'लांडगा',emoji:'🐺',theme:12},
+      {id:'a42',label:'Deer',mr:'हरिण',emoji:'🦌',theme:11},
+      {id:'a43',label:'Zebra',mr:'झेब्रा',emoji:'🦓',theme:13},
+      {id:'a44',label:'Giraffe',mr:'जिराफ',emoji:'🦒',theme:5},
+      {id:'a45',label:'Hippo',mr:'हिप्पो',emoji:'🦛',theme:12},
+      {id:'a46',label:'Camel',mr:'उंट',emoji:'🐪',theme:0},
+      {id:'a47',label:'Gorilla',mr:'गोरिला',emoji:'🦍',theme:1},
+      {id:'a48',label:'Bat',mr:'वटवाघूळ',emoji:'🦇',theme:1},
+      {id:'a49',label:'Kangaroo',mr:'कांगारू',emoji:'🦘',theme:0},
+      {id:'a50',label:'Sheep',mr:'मेंढी',emoji:'🐑',theme:13},
+    ]
+  },
+  {
+    id:'plants', name:'Plants', nameMr:'वनस्पती', icon:'🌿',
+    color:'linear-gradient(145deg,#43e97b,#38f9d7)',
+    items:[
+      {id:'p1',label:'Rose',mr:'गुलाब',emoji:'🌹',theme:4},
+      {id:'p2',label:'Tulip',mr:'ट्युलिप',emoji:'🌷',theme:7},
+      {id:'p3',label:'Sunflower',mr:'सूर्यफूल',emoji:'🌻',theme:5},
+      {id:'p4',label:'Blossom',mr:'फूल',emoji:'🌸',theme:14},
+      {id:'p5',label:'Cactus',mr:'निवडुंग',emoji:'🌵',theme:2},
+      {id:'p6',label:'Tree',mr:'झाड',emoji:'🌳',theme:2},
+      {id:'p7',label:'Palm Tree',mr:'नारळाचे झाड',emoji:'🌴',theme:6},
+      {id:'p8',label:'Seedling',mr:'रोप',emoji:'🌱',theme:6},
+      {id:'p9',label:'Herb',mr:'औषधी वनस्पती',emoji:'🌿',theme:2},
+      {id:'p10',label:'Mushroom',mr:'अळंबी',emoji:'🍄',theme:0},
+      {id:'p11',label:'Maple Leaf',mr:'मेपल पान',emoji:'🍁',theme:0},
+      {id:'p12',label:'Bamboo',mr:'बांबू',emoji:'🎋',theme:6},
+      {id:'p13',label:'Corn',mr:'मका',emoji:'🌽',theme:5},
+      {id:'p14',label:'Hot Pepper',mr:'मिरची',emoji:'🌶️',theme:4},
+      {id:'p15',label:'Broccoli',mr:'ब्रोकोली',emoji:'🥦',theme:2},
+      {id:'p16',label:'Eggplant',mr:'वांगे',emoji:'🍆',theme:1},
+      {id:'p17',label:'Tomato',mr:'टोमॅटो',emoji:'🍅',theme:4},
+      {id:'p18',label:'Onion',mr:'कांदा',emoji:'🧅',theme:5},
+      {id:'p19',label:'Garlic',mr:'लसूण',emoji:'🧄',theme:13},
+      {id:'p20',label:'Wheat',mr:'गहू',emoji:'🌾',theme:5},
+      {id:'p21',label:'Lotus',mr:'कमळ',emoji:'🪷',theme:7},
+      {id:'p22',label:'Hibiscus',mr:'जास्वंद',emoji:'🌺',theme:4},
+      {id:'p23',label:'Daisy',mr:'डेझी',emoji:'🌼',theme:5},
+      {id:'p24',label:'Potted Plant',mr:'कुंडीतील झाड',emoji:'🪴',theme:2},
+      {id:'p25',label:'Carrot',mr:'गाजर',emoji:'🥕',theme:0},
+      {id:'p26',label:'Potato',mr:'बटाटा',emoji:'🥔',theme:0},
+      {id:'p27',label:'Cucumber',mr:'काकडी',emoji:'🥒',theme:2},
+      {id:'p28',label:'Lettuce',mr:'कोशिंबिरीची भाजी',emoji:'🥬',theme:2},
+      {id:'p29',label:'Peanuts',mr:'शेंगदाणे',emoji:'🥜',theme:0},
+      {id:'p30',label:'Beans',mr:'शेंगा',emoji:'🫘',theme:11},
+    ]
+  },
+  {
+    id:'daily', name:'Daily Things', nameMr:'दैनंदिन वस्तू', icon:'🏠',
+    color:'linear-gradient(145deg,#4facfe,#00f2fe)',
+    items:[
+      {id:'d1',label:'Pencil',mr:'पेन्सिल',emoji:'✏️',theme:5},
+      {id:'d2',label:'Pen',mr:'पेन',emoji:'🖊️',theme:3},
+      {id:'d3',label:'Book',mr:'पुस्तक',emoji:'📚',theme:3},
+      {id:'d4',label:'Bag',mr:'पिशवी',emoji:'🎒',theme:9},
+      {id:'d5',label:'Clock',mr:'घड्याळ',emoji:'⏰',theme:0},
+      {id:'d6',label:'Phone',mr:'फोन',emoji:'📱',theme:1},
+      {id:'d7',label:'Computer',mr:'संगणक',emoji:'💻',theme:9},
+      {id:'d8',label:'Cup',mr:'कप',emoji:'☕',theme:0},
+      {id:'d9',label:'Plate',mr:'ताट',emoji:'🍽️',theme:13},
+      {id:'d10',label:'Fork',mr:'काटा',emoji:'🍴',theme:13},
+      {id:'d11',label:'Spoon',mr:'चमचा',emoji:'🥄',theme:13},
+      {id:'d12',label:'Chair',mr:'खुर्ची',emoji:'🪑',theme:11},
+      {id:'d13',label:'Bed',mr:'पलंग',emoji:'🛏️',theme:14},
+      {id:'d14',label:'Lamp',mr:'दिवा',emoji:'💡',theme:5},
+      {id:'d15',label:'Key',mr:'किल्ली',emoji:'🔑',theme:0},
+      {id:'d16',label:'Umbrella',mr:'छत्री',emoji:'☂️',theme:3},
+      {id:'d17',label:'Glasses',mr:'चष्मा',emoji:'👓',theme:13},
+      {id:'d18',label:'Hat',mr:'टोपी',emoji:'🎩',theme:1},
+      {id:'d19',label:'T-shirt',mr:'टी-शर्ट',emoji:'👕',theme:3},
+      {id:'d20',label:'Shoes',mr:'बूट',emoji:'👟',theme:9},
+      {id:'d21',label:'Toothbrush',mr:'दातांचा ब्रश',emoji:'🪥',theme:3},
+      {id:'d22',label:'Soap',mr:'साबण',emoji:'🧼',theme:3},
+      {id:'d23',label:'Scissors',mr:'कात्री',emoji:'✂️',theme:13},
+      {id:'d24',label:'Hammer',mr:'हातोडा',emoji:'🔨',theme:0},
+      {id:'d25',label:'Camera',mr:'कॅमेरा',emoji:'📷',theme:11},
+      {id:'d26',label:'Headphones',mr:'हेडफोन',emoji:'🎧',theme:1},
+      {id:'d27',label:'Battery',mr:'बॅटरी',emoji:'🔋',theme:2},
+      {id:'d28',label:'Ruler',mr:'पट्टी',emoji:'📏',theme:5},
+      {id:'d29',label:'Calendar',mr:'दिनदर्शिका',emoji:'📅',theme:3},
+      {id:'d30',label:'Newspaper',mr:'वर्तमानपत्र',emoji:'📰',theme:13},
+    ]
+  },
+  {
+    id:'vehicles', name:'Vehicles', nameMr:'वाहने', icon:'🚗',
+    color:'linear-gradient(145deg,#f77062,#fe5196)',
+    items:[
+      {id:'v1',label:'Car',mr:'कार',emoji:'🚗',theme:4},
+      {id:'v2',label:'Bus',mr:'बस',emoji:'🚌',theme:3},
+      {id:'v3',label:'Truck',mr:'ट्रक',emoji:'🚛',theme:13},
+      {id:'v4',label:'Ambulance',mr:'रुग्णवाहिका',emoji:'🚑',theme:4},
+      {id:'v5',label:'Fire Truck',mr:'अग्निशमन गाडी',emoji:'🚒',theme:4},
+      {id:'v6',label:'Taxi',mr:'टॅक्सी',emoji:'🚕',theme:5},
+      {id:'v7',label:'Bicycle',mr:'सायकल',emoji:'🚲',theme:2},
+      {id:'v8',label:'Motorbike',mr:'मोटरसायकल',emoji:'🏍️',theme:11},
+      {id:'v9',label:'Train',mr:'रेल्वे',emoji:'🚂',theme:4},
+      {id:'v10',label:'Airplane',mr:'विमान',emoji:'✈️',theme:3},
+      {id:'v11',label:'Rocket',mr:'रॉकेट',emoji:'🚀',theme:9},
+      {id:'v12',label:'Helicopter',mr:'हेलिकॉप्टर',emoji:'🚁',theme:9},
+      {id:'v13',label:'Boat',mr:'नाव',emoji:'⛵',theme:3},
+      {id:'v14',label:'Ship',mr:'जहाज',emoji:'🚢',theme:3},
+      {id:'v15',label:'Tractor',mr:'ट्रॅक्टर',emoji:'🚜',theme:6},
+      {id:'v16',label:'Scooter',mr:'स्कूटर',emoji:'🛵',theme:0},
+      {id:'v17',label:'Police Car',mr:'पोलीस गाडी',emoji:'🚔',theme:3},
+      {id:'v18',label:'School Bus',mr:'शाळेची बस',emoji:'🚍',theme:5},
+      {id:'v19',label:'Subway',mr:'भुयारी रेल्वे',emoji:'🚇',theme:9},
+      {id:'v20',label:'Bullet Train',mr:'बुलेट ट्रेन',emoji:'🚅',theme:3},
+    ]
+  },
+  {
+    id:'food', name:'Food & Fruits', nameMr:'खाणे-पिणे', icon:'🍎',
+    color:'linear-gradient(145deg,#fddb92,#d1fdff)',
+    items:[
+      {id:'f1',label:'Apple',mr:'सफरचंद',emoji:'🍎',theme:4},
+      {id:'f2',label:'Banana',mr:'केळे',emoji:'🍌',theme:5},
+      {id:'f3',label:'Orange',mr:'संत्रा',emoji:'🍊',theme:0},
+      {id:'f4',label:'Grapes',mr:'द्राक्षे',emoji:'🍇',theme:1},
+      {id:'f5',label:'Strawberry',mr:'स्ट्रॉबेरी',emoji:'🍓',theme:4},
+      {id:'f6',label:'Watermelon',mr:'टरबूज',emoji:'🍉',theme:2},
+      {id:'f7',label:'Mango',mr:'आंबा',emoji:'🥭',theme:0},
+      {id:'f8',label:'Pineapple',mr:'अननस',emoji:'🍍',theme:5},
+      {id:'f9',label:'Coconut',mr:'नारळ',emoji:'🥥',theme:13},
+      {id:'f10',label:'Cherry',mr:'चेरी',emoji:'🍒',theme:4},
+      {id:'f11',label:'Pizza',mr:'पिझ्झा',emoji:'🍕',theme:0},
+      {id:'f12',label:'Burger',mr:'बर्गर',emoji:'🍔',theme:0},
+      {id:'f13',label:'Ice Cream',mr:'आइस्क्रीम',emoji:'🍦',theme:13},
+      {id:'f14',label:'Cake',mr:'केक',emoji:'🎂',theme:7},
+      {id:'f15',label:'Cookie',mr:'बिस्किट',emoji:'🍪',theme:0},
+      {id:'f16',label:'Bread',mr:'ब्रेड',emoji:'🍞',theme:5},
+      {id:'f17',label:'Egg',mr:'अंडे',emoji:'🥚',theme:5},
+      {id:'f18',label:'Milk',mr:'दूध',emoji:'🥛',theme:13},
+      {id:'f19',label:'Coffee',mr:'कॉफी',emoji:'☕',theme:11},
+      {id:'f20',label:'Rice',mr:'भात',emoji:'🍚',theme:13},
+      {id:'f21',label:'Noodles',mr:'नूडल्स',emoji:'🍜',theme:5},
+      {id:'f22',label:'Sushi',mr:'सुशी',emoji:'🍣',theme:4},
+      {id:'f23',label:'Fries',mr:'फ्राइज',emoji:'🍟',theme:5},
+      {id:'f24',label:'Popcorn',mr:'पॉपकॉर्न',emoji:'🍿',theme:5},
+      {id:'f25',label:'Honey',mr:'मध',emoji:'🍯',theme:0},
+      {id:'f26',label:'Lemon',mr:'लिंबू',emoji:'🍋',theme:5},
+      {id:'f27',label:'Peach',mr:'पीच',emoji:'🍑',theme:14},
+      {id:'f28',label:'Kiwi',mr:'कीवी',emoji:'🥝',theme:6},
+      {id:'f29',label:'Chocolate',mr:'चॉकलेट',emoji:'🍫',theme:11},
+      {id:'f30',label:'Donut',mr:'डोनट',emoji:'🍩',theme:0},
+    ]
+  },
+  {
+    id:'sports', name:'Sports', nameMr:'खेळ', icon:'⚽',
+    color:'linear-gradient(145deg,#96fbc4,#f9f586)',
+    items:[
+      {id:'s1',label:'Football',mr:'फुटबॉल',emoji:'⚽',theme:13},
+      {id:'s2',label:'Basketball',mr:'बास्केटबॉल',emoji:'🏀',theme:0},
+      {id:'s3',label:'Cricket',mr:'क्रिकेट',emoji:'🏏',theme:5},
+      {id:'s4',label:'Tennis',mr:'टेनिस',emoji:'🎾',theme:2},
+      {id:'s5',label:'Badminton',mr:'बॅडमिंटन',emoji:'🏸',theme:6},
+      {id:'s6',label:'Baseball',mr:'बेसबॉल',emoji:'⚾',theme:13},
+      {id:'s7',label:'Golf',mr:'गोल्फ',emoji:'⛳',theme:2},
+      {id:'s8',label:'Boxing',mr:'बॉक्सिंग',emoji:'🥊',theme:4},
+      {id:'s9',label:'Swimming',mr:'पोहणे',emoji:'🏊',theme:3},
+      {id:'s10',label:'Cycling',mr:'सायकलिंग',emoji:'🚴',theme:6},
+      {id:'s11',label:'Running',mr:'धावणे',emoji:'🏃',theme:0},
+      {id:'s12',label:'Yoga',mr:'योग',emoji:'🧘',theme:9},
+      {id:'s13',label:'Gymnastics',mr:'जिम्नॅस्टिक्स',emoji:'🤸',theme:7},
+      {id:'s14',label:'Hockey',mr:'हॉकी',emoji:'🏒',theme:3},
+      {id:'s15',label:'Volleyball',mr:'व्हॉलीबॉल',emoji:'🏐',theme:5},
+      {id:'s16',label:'Skating',mr:'स्केटिंग',emoji:'⛸️',theme:3},
+      {id:'s17',label:'Archery',mr:'तिरंदाजी',emoji:'🏹',theme:5},
+      {id:'s18',label:'Trophy',mr:'ट्रॉफी',emoji:'🏆',theme:5},
+      {id:'s19',label:'Medal',mr:'पदक',emoji:'🥇',theme:0},
+      {id:'s20',label:'Bowling',mr:'बॉलिंग',emoji:'🎳',theme:13},
+    ]
+  },
+  {
+    id:'weather', name:'Weather', nameMr:'हवामान', icon:'☀️',
+    color:'linear-gradient(145deg,#c471f5,#fa71cd)',
+    items:[
+      {id:'w1',label:'Sun',mr:'सूर्य',emoji:'☀️',theme:5},
+      {id:'w2',label:'Cloud',mr:'ढग',emoji:'☁️',theme:13},
+      {id:'w3',label:'Rain',mr:'पाऊस',emoji:'🌧️',theme:3},
+      {id:'w4',label:'Snow',mr:'बर्फ',emoji:'🌨️',theme:3},
+      {id:'w5',label:'Thunder',mr:'विजा',emoji:'⛈️',theme:9},
+      {id:'w6',label:'Wind',mr:'वारा',emoji:'💨',theme:3},
+      {id:'w7',label:'Rainbow',mr:'इंद्रधनुष्य',emoji:'🌈',theme:7},
+      {id:'w8',label:'Fog',mr:'धुके',emoji:'🌫️',theme:13},
+      {id:'w9',label:'Tornado',mr:'चक्रीवादळ',emoji:'🌪️',theme:9},
+      {id:'w10',label:'Snowflake',mr:'बर्फाचा कण',emoji:'❄️',theme:3},
+      {id:'w11',label:'Moon',mr:'चंद्र',emoji:'🌙',theme:1},
+      {id:'w12',label:'Star',mr:'तारा',emoji:'⭐',theme:5},
+      {id:'w13',label:'Sunrise',mr:'सूर्योदय',emoji:'🌅',theme:0},
+      {id:'w14',label:'Sunset',mr:'सूर्यास्त',emoji:'🌇',theme:0},
+      {id:'w15',label:'Lightning',mr:'वीज',emoji:'⚡',theme:5},
+      {id:'w16',label:'Hot',mr:'गरम',emoji:'🌡️',theme:4},
+      {id:'w17',label:'Cold',mr:'थंड',emoji:'🥶',theme:3},
+      {id:'w18',label:'Volcano',mr:'ज्वालामुखी',emoji:'🌋',theme:4},
+      {id:'w19',label:'Hurricane',mr:'चक्रीवादळ',emoji:'🌀',theme:9},
+      {id:'w20',label:'Sunny',mr:'ऊन',emoji:'🌤️',theme:5},
+    ]
+  },
+  {
+    id:'space', name:'Outer Space', nameMr:'अवकाश', icon:'🚀',
+    color:'linear-gradient(145deg,#30cfd0,#667eea)',
+    items:[
+      {id:'sp1',label:'Rocket',mr:'रॉकेट',emoji:'🚀',theme:9},
+      {id:'sp2',label:'UFO',mr:'यूएफओ',emoji:'🛸',theme:9},
+      {id:'sp3',label:'Satellite',mr:'उपग्रह',emoji:'🛰️',theme:9},
+      {id:'sp4',label:'Astronaut',mr:'अंतराळवीर',emoji:'👨‍🚀',theme:3},
+      {id:'sp5',label:'Alien',mr:'परग्रहवासी',emoji:'👽',theme:2},
+      {id:'sp6',label:'Star',mr:'तारा',emoji:'⭐',theme:5},
+      {id:'sp7',label:'Moon',mr:'चंद्र',emoji:'🌙',theme:1},
+      {id:'sp8',label:'Sun',mr:'सूर्य',emoji:'🌞',theme:5},
+      {id:'sp9',label:'Planet',mr:'ग्रह',emoji:'🪐',theme:3},
+      {id:'sp10',label:'Earth',mr:'पृथ्वी',emoji:'🌍',theme:3},
+      {id:'sp11',label:'Comet',mr:'धूमकेतू',emoji:'☄️',theme:0},
+      {id:'sp12',label:'Galaxy',mr:'आकाशगंगा',emoji:'🌌',theme:9},
+      {id:'sp13',label:'Telescope',mr:'दुर्बीण',emoji:'🔭',theme:1},
+      {id:'sp14',label:'Meteor',mr:'उल्का',emoji:'☄️',theme:11},
+      {id:'sp15',label:'Black Hole',mr:'कृष्णविवर',emoji:'🕳️',theme:9},
+      {id:'sp16',label:'Astronaut',mr:'अंतराळवीर',emoji:'🧑‍🚀',theme:3},
+      {id:'sp17',label:'Space Station',mr:'अवकाश स्थानक',emoji:'🛸',theme:3},
+      {id:'sp18',label:'Mars',mr:'मंगळ',emoji:'🔴',theme:4},
+      {id:'sp19',label:'Saturn',mr:'शनी',emoji:'🪐',theme:5},
+      {id:'sp20',label:'Jupiter',mr:'गुरू',emoji:'🪐',theme:0},
+    ]
+  },
+];
+
+/* =====================================================================
+   TTS — Web Speech API
+===================================================================== */
+let currentWord = '';
+let speechSynth = window.speechSynthesis;
+let isSpeaking = false;
+
+function speakWord(word) {
+  if (!speechSynth) return;
+  speechSynth.cancel();
+  const utt = new SpeechSynthesisUtterance(word);
+  utt.lang = 'en-US';
+  utt.rate = 0.85;
+  utt.pitch = 1.1;
+  utt.volume = 1;
+  const speakBtn = document.getElementById('speak-btn');
+  utt.onstart = () => { speakBtn.classList.add('speaking-pulse'); };
+  utt.onend = () => { speakBtn.classList.remove('speaking-pulse'); };
+  utt.onerror = () => { speakBtn.classList.remove('speaking-pulse'); };
+  speechSynth.speak(utt);
+  currentWord = word;
+}
+
+/* Auto-speak with a slight delay so page doesn't conflict */
+function autoSpeak(word) {
+  setTimeout(() => speakWord(word), 400);
+}
+
+/* =====================================================================
+   DIFFICULTY
+===================================================================== */
+const DIFF = { count: 6, gridClass: 'grid-3', time: 9000, lives: 3, hint: false };
+const LEVEL_XP = [0,5,12,20,30,45,60,80,100,125,150];
+
+/* STATE */
+let selectedCats = new Set(['animals']);
+let score=0, lives=0, level=1, streak=0;
+let targetId='', locked=false, timerHandle=null;
+let currentCat=null, currentTarget=null;
+let highScores={};
+
+/* AUDIO */
+let actx=null;
+const getA=()=>{if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;};
+function tone(f,t,v,s,d){try{const c=getA(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime+s);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+s+d);o.start(c.currentTime+s);o.stop(c.currentTime+s+d+.05);}catch(e){}}
+function playSuccess(){[523,659,784,1047].forEach((f,i)=>tone(f,'sine',.22,i*.09,.3));}
+function playLvlUp(){[[261,0],[330,.1],[392,.2],[523,.3],[784,.45]].forEach(([f,t])=>tone(f,'sine',.25,t,.5));}
+function playFail(){tone(175,'sawtooth',.28,0,.4);}
+function playTimeout(){[0,.18,.36].forEach(t=>tone(210,'square',.2,t,.14));}
+
+/* STARS */
+(()=>{const c=document.getElementById('stars');for(let i=0;i<50;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*3+1;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--dl:${-Math.random()*4}s;`;c.appendChild(s);}})();
+
+/* CATEGORY GRID */
+function buildCatGrid(){
+  const grid=document.getElementById('cat-grid');
+  grid.innerHTML='';
+  CATEGORIES.forEach(cat=>{
+    const btn=document.createElement('button');
+    btn.className='cat-card'+(selectedCats.has(cat.id)?' selected':'');
+    btn.style.background=cat.color;
+    btn.innerHTML=`<span class="cat-check">✅</span>
+      <span class="cat-icon">${cat.icon}</span>
+      <span class="cat-name">${cat.name}</span>
+      <span class="cat-name-mr">${cat.nameMr}</span>
+      <span class="cat-count">${cat.items.length} items</span>`;
+    btn.addEventListener('click',()=>{
+      if(selectedCats.has(cat.id)){if(selectedCats.size>1)selectedCats.delete(cat.id);}
+      else selectedCats.add(cat.id);
+      btn.classList.toggle('selected',selectedCats.has(cat.id));
+    });
+    grid.appendChild(btn);
+  });
+}
+
+/* HI-SCORES */
+function renderHiScores(){
+  const row=document.getElementById('hi-row');row.innerHTML='';
+  CATEGORIES.forEach(cat=>{
+    const hs=highScores[cat.id]||0;
+    if(hs>0){const el=document.createElement('div');el.className='hi-pill';el.textContent=`${cat.icon} ${hs}`;row.appendChild(el);}
+  });
+  if(row.children.length===0)row.innerHTML='<div class="hi-pill">🏆 खेळा आणि रेकॉर्ड सेट करा!</div>';
+}
+
+/* STREAK */
+function renderStreak(){
+  const el=document.getElementById('streak-wrap');el.innerHTML='';
+  for(let i=0;i<5;i++){const p=document.createElement('div');p.className='s-pip'+(i<streak?' lit':'');el.appendChild(p);}
+}
+
+/* TIMER */
+function startTimer(ms){
+  clearTimeout(timerHandle);
+  const bar=document.getElementById('timer-bar');
+  bar.style.transition='none';bar.style.width='100%';void bar.offsetWidth;
+  bar.style.transition=`width ${ms}ms linear`;bar.style.width='0%';
+  timerHandle=setTimeout(()=>{if(!locked)onTimeout();},ms);
+}
+function stopTimer(){clearTimeout(timerHandle);timerHandle=null;}
+function onTimeout(){locked=true;streak=0;renderStreak();playTimeout();setFeedback('⏰ वेळ संपला!','#F59E0B');loseLife();}
+
+/* LIVES */
+function renderLives(){document.getElementById('lives-pill').textContent='❤️ '+lives;}
+function loseLife(){
+  lives--;renderLives();
+  if(lives<=0)setTimeout(endGame,1200);
+  else setTimeout(()=>{nextRound();locked=false;},1600);
+}
+
+/* LEVEL */
+function checkLevel(){
+  const idx=LEVEL_XP.findIndex(t=>score<t);
+  const nl=idx===-1?LEVEL_XP.length:Math.max(1,idx);
+  if(nl>level){level=nl;document.getElementById('level-val').textContent=level;document.getElementById('badge-num').textContent=level;const b=document.getElementById('lvl-badge');b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2000);playLvlUp();}
+}
+
+/* FEEDBACK */
+function setFeedback(msg,color='#fff'){
+  const el=document.getElementById('feedback');el.textContent=msg;el.style.color=color;
+  setTimeout(()=>{el.textContent='\u00a0';el.style.color='#fff';},1400);
+}
+
+/* CONFETTI */
+function confetti(){
+  const cols=['#F59E0B','#EC4899','#10B981','#3B82F6','#7C3AED','#EF4444','#fff'];
+  for(let i=0;i<28;i++){
+    const el=document.createElement('div');el.className='confetti-piece';
+    el.style.cssText=`left:${10+Math.random()*80}%;background:${cols[i%cols.length]};--dur:${1.8+Math.random()*1.4}s;--dl:${Math.random()*.4}s;width:${7+Math.random()*8}px;height:${9+Math.random()*10}px;transform:rotate(${Math.random()*360}deg);`;
+    document.body.appendChild(el);el.addEventListener('animationend',()=>el.remove());
+  }
+}
+
+/* BUILD GRID */
+function buildGrid(items){
+  const grid=document.getElementById('item-grid');
+  grid.className=DIFF.gridClass;grid.innerHTML='';
+  items.forEach((item,i)=>{
+    const btn=document.createElement('button');
+    btn.className=`item-btn t${item.theme} anim-in`;
+    btn.id=`btn-${item.id}`;
+    btn.style.animationDelay=`${i*.06}s`;
+    btn.innerHTML=`<span class="item-emoji">${item.emoji}</span>
+      <span class="item-name">${item.label}</span>
+      <span class="item-name-mr">${item.mr}</span>`;
+    btn.addEventListener('click',()=>handleTap(item));
+    grid.appendChild(btn);
+  });
+}
+
+/* NEXT ROUND */
+function nextRound(){
+  const catIds=[...selectedCats];
+  const catId=catIds[Math.floor(Math.random()*catIds.length)];
+  currentCat=CATEGORIES.find(c=>c.id===catId);
+  document.getElementById('cat-badge-pill').textContent=`${currentCat.icon} ${currentCat.nameMr}`;
+  const pool=[...currentCat.items].sort(()=>Math.random()-.5).slice(0,DIFF.count);
+  let target;
+  do{target=pool[Math.floor(Math.random()*pool.length)];}
+  while(target.id===targetId&&pool.length>1);
+  targetId=target.id;
+  currentTarget=target;
+  document.getElementById('target-name').textContent=target.label;
+  document.getElementById('target-marathi').textContent=target.mr;
+  buildGrid(pool);
+  startTimer(DIFF.time);
+  autoSpeak(target.label);
+}
+
+/* TAP */
+function handleTap(item){
+  if(locked)return;
+  stopTimer();
+  const btn=document.getElementById(`btn-${item.id}`);
+  if(item.id===targetId){
+    locked=true;streak=Math.min(streak+1,5);
+    const bonus=streak>=5?3:streak>=3?2:1;
+    score+=bonus;
+    document.getElementById('score-val').textContent=score;
+    renderStreak();checkLevel();
+    btn.classList.remove('anim-correct');void btn.offsetWidth;btn.classList.add('anim-correct');
+    btn.addEventListener('animationend',()=>btn.classList.remove('anim-correct'),{once:true});
+    if(streak>=5){confetti();setFeedback(`🔥 ${streak}x कॉम्बो! +${bonus}`,'#F59E0B');}
+    else if(streak>=3){setFeedback(`⚡ ${streak} स्ट्रीक! +${bonus}`,'#10B981');}
+    else setFeedback('🎉 शाब्बास!','#10B981');
+    playSuccess();
+    setTimeout(()=>{nextRound();locked=false;},1600);
+  } else {
+    streak=0;renderStreak();
+    btn.classList.remove('anim-wrong');void btn.offsetWidth;btn.classList.add('anim-wrong');
+    btn.addEventListener('animationend',()=>btn.classList.remove('anim-wrong'),{once:true});
+    setFeedback('🙈 परत प्रयत्न करा!','#EF4444');
+    playFail();
+    locked=true;loseLife();
+  }
+}
+
+/* SCREENS */
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
+
+/* START */
+function startGame(){
+  score=0;level=1;streak=0;lives=DIFF.lives;locked=false;targetId='';
+  document.getElementById('score-val').textContent='0';
+  document.getElementById('level-val').textContent='1';
+  renderLives();renderStreak();
+  showScreen('game');nextRound();
+}
+
+/* END */
+function endGame(){
+  stopTimer();locked=true;
+  if(speechSynth) speechSynth.cancel();
+  const catId=currentCat?currentCat.id:'animals';
+  const prev=highScores[catId]||0;const newBest=score>prev;
+  if(newBest){highScores[catId]=score;try{localStorage.setItem('tapLearnHS',JSON.stringify(highScores));}catch(e){}}
+  document.getElementById('go-emoji').textContent=score>=20?'🏆':score>=10?'😊':'😢';
+  document.getElementById('go-title').textContent=score>=20?'अप्रतिम!':score>=10?'खूप छान!':'गेम संपला!';
+  document.getElementById('go-score').textContent=score;
+  document.getElementById('go-best').innerHTML=newBest?'<span class="go-newbest">🏆 नवीन रेकॉर्ड!</span>':`सर्वोत्तम: ${prev}`;
+  showScreen('gameover');if(score>=5)confetti();
+}
+
+/* WIRING */
+const goHome=()=>{stopTimer();locked=false;if(speechSynth)speechSynth.cancel();renderHiScores();showScreen('home');};
+document.getElementById('btn-start').addEventListener('click',startGame);
+document.getElementById('btn-retry').addEventListener('click',startGame);
+document.getElementById('btn-back-game').addEventListener('click',goHome);
+document.getElementById('btn-home').addEventListener('click',goHome);
+document.getElementById('speak-btn').addEventListener('click',()=>{if(currentTarget)speakWord(currentTarget.label);});
+
+/* INIT */
+try{const hs=localStorage.getItem('tapLearnHS');if(hs)highScores=JSON.parse(hs);}catch(e){}
+buildCatGrid();renderHiScores();
+</script>
+</body>
+</html>
