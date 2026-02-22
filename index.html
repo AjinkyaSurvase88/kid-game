@@ -6,9 +6,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a0533">
 <title>Tap & Learn! 🌟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Hind:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --font:'Nunito','Comic Sans MS',cursive;
+  --font:'Baloo 2', 'Comic Sans MS', cursive;
+  --font-mr:'Hind', sans-serif;
   --radius:20px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -83,8 +86,8 @@ html,body{
   flex-shrink:0;
 }
 .cat-card{
-  border:none;border-radius:18px;
-  padding:11px 7px;
+  border:none;border-radius:20px;
+  padding:16px 8px;
   cursor:pointer;
   display:flex;flex-direction:column;align-items:center;gap:4px;
   transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s;
@@ -92,10 +95,10 @@ html,body{
 }
 .cat-card:active{transform:scale(.91);}
 .cat-card.selected{box-shadow:0 0 0 3px #fff,0 0 20px rgba(255,255,255,.4);transform:scale(1.03);}
-.cat-icon{font-size:clamp(1.6rem,7vw,2.6rem);line-height:1;}
-.cat-name{font-size:clamp(.72rem,2.8vw,.92rem);font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.4);}
-.cat-name-mr{font-size:clamp(.6rem,2.2vw,.75rem);color:rgba(255,255,255,.75);font-weight:700;}
-.cat-count{font-size:.62rem;color:rgba(255,255,255,.6);}
+.cat-icon{font-size:clamp(3rem,12vw,5rem);line-height:1;margin-bottom:2px;}
+.cat-name{font-size:clamp(1.05rem,4.5vw,1.5rem);font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.4);font-family:'Baloo 2',cursive;}
+.cat-name-mr{font-size:clamp(.88rem,3.5vw,1.15rem);color:rgba(255,255,255,.85);font-weight:700;font-family:'Hind',sans-serif;}
+.cat-count{font-size:clamp(.7rem,2.5vw,.9rem);color:rgba(255,255,255,.65);}
 .cat-check{position:absolute;top:6px;right:6px;font-size:.9rem;opacity:0;transition:opacity .2s;}
 .cat-card.selected .cat-check{opacity:1;}
 .btn-back{
@@ -168,11 +171,13 @@ html,body{
   letter-spacing:3px;color:rgba(255,255,255,.45);margin-bottom:2px;
 }
 #instr-text{
-  font-size:clamp(1.1rem,5vw,2rem);font-weight:900;line-height:1.2;
+  font-size:clamp(1.3rem,6vw,2.2rem);font-weight:900;line-height:1.2;
+  font-family:'Baloo 2', cursive;
 }
 #instr-marathi{
-  font-size:clamp(.75rem,3vw,1.1rem);color:rgba(255,255,255,.75);
-  font-weight:700;margin-top:2px;
+  font-size:clamp(.95rem,3.8vw,1.3rem);color:rgba(255,255,255,.8);
+  font-family:'Hind', sans-serif;
+  font-weight:700;margin-top:3px;
 }
 #speak-btn{
   margin-top:5px;
@@ -188,13 +193,14 @@ html,body{
 #speak-btn:active{background:rgba(255,255,255,.3);}
 
 #feedback{
-  font-size:clamp(.95rem,3.8vw,1.5rem);font-weight:900;
-  text-align:center;min-height:1.8rem;
+  font-size:clamp(1.1rem,5vw,1.8rem);font-weight:900;
+  font-family:'Baloo 2', cursive;
+  text-align:center;min-height:2rem;
   text-shadow:0 2px 10px rgba(0,0,0,.4);flex-shrink:0;
 }
 #item-grid{
   display:grid;
-  gap:clamp(10px,2.5vw,16px);
+  gap:clamp(12px,3vw,18px);
   width:100%;max-width:480px;
   flex:1;
   min-height:0;
@@ -209,30 +215,33 @@ html,body{
   border:none;border-radius:var(--radius);
   cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  aspect-ratio:3/2;
+  aspect-ratio:4/3;
   width:100%;
-  box-shadow:0 6px 18px rgba(0,0,0,.35),0 0 0 2px rgba(255,255,255,.1) inset;
+  box-shadow:0 6px 20px rgba(0,0,0,.4),0 0 0 2px rgba(255,255,255,.12) inset;
   transition:transform .12s cubic-bezier(.34,1.56,.64,1),box-shadow .12s;
-  font-family:var(--font);gap:5px;
+  font-family:var(--font);gap:6px;
   position:relative;overflow:hidden;
-  padding:10px 8px;
+  padding:12px 8px;
 }
 .item-btn:active{transform:scale(.88)!important;}
 .item-emoji{
-  font-size:clamp(2.4rem,9vh,5rem);
+  font-size:clamp(3rem,11vw,5.5rem);
   line-height:1;display:block;pointer-events:none;
   flex-shrink:0;
 }
 .item-name{
-  font-size:clamp(.95rem,4vw,1.4rem);font-weight:900;color:#fff;
-  pointer-events:none;text-shadow:0 2px 6px rgba(0,0,0,.45);
-  text-align:center;padding:0 4px;line-height:1.15;
+  font-size:clamp(1.1rem,5vw,1.7rem);font-weight:900;color:#fff;
+  font-family:'Baloo 2', cursive;
+  pointer-events:none;text-shadow:0 2px 8px rgba(0,0,0,.5);
+  text-align:center;padding:0 4px;line-height:1.1;
+  letter-spacing:0.5px;
 }
 .item-name-mr{
-  font-size:clamp(.8rem,3.2vw,1.1rem);
-  color:rgba(255,255,255,.9);
+  font-size:clamp(.9rem,3.8vw,1.3rem);
+  color:rgba(255,255,255,.92);
+  font-family:'Hind', sans-serif;
   font-weight:700;pointer-events:none;
-  text-align:center;padding:0 4px;line-height:1.1;
+  text-align:center;padding:0 4px;line-height:1.2;
 }
 
 /* Theme gradients */
@@ -427,32 +436,57 @@ const CATEGORIES = [
       {id:'a22',label:'Peacock',mr:'मोर',emoji:'🦚',theme:9},
       {id:'a23',label:'Swan',mr:'हंस',emoji:'🦢',theme:13},
       {id:'a24',label:'Rooster',mr:'कोंबडा',emoji:'🐓',theme:0},
-      {id:'a25',label:'Turkey',mr:'टर्की',emoji:'🦃',theme:11},
-      {id:'a26',label:'Crocodile',mr:'मगर',emoji:'🐊',theme:2},
-      {id:'a27',label:'Turtle',mr:'कासव',emoji:'🐢',theme:6},
-      {id:'a28',label:'Snake',mr:'साप',emoji:'🐍',theme:9},
-      {id:'a29',label:'Lizard',mr:'सरडा',emoji:'🦎',theme:6},
-      {id:'a30',label:'Dragon',mr:'ड्रॅगन',emoji:'🐉',theme:4},
-      {id:'a31',label:'Whale',mr:'व्हेल',emoji:'🐋',theme:3},
-      {id:'a32',label:'Dolphin',mr:'डॉल्फिन',emoji:'🐬',theme:3},
-      {id:'a33',label:'Shark',mr:'शार्क',emoji:'🦈',theme:9},
-      {id:'a34',label:'Fish',mr:'मासा',emoji:'🐟',theme:3},
-      {id:'a35',label:'Octopus',mr:'ऑक्टोपस',emoji:'🐙',theme:8},
-      {id:'a36',label:'Crab',mr:'खेकडा',emoji:'🦀',theme:4},
-      {id:'a37',label:'Butterfly',mr:'फुलपाखरू',emoji:'🦋',theme:7},
-      {id:'a38',label:'Bee',mr:'मधमाशी',emoji:'🐝',theme:5},
-      {id:'a39',label:'Ladybug',mr:'लेडीबग',emoji:'🐞',theme:4},
-      {id:'a40',label:'Fox',mr:'कोल्हा',emoji:'🦊',theme:0},
-      {id:'a41',label:'Wolf',mr:'लांडगा',emoji:'🐺',theme:12},
-      {id:'a42',label:'Deer',mr:'हरिण',emoji:'🦌',theme:11},
-      {id:'a43',label:'Zebra',mr:'झेब्रा',emoji:'🦓',theme:13},
-      {id:'a44',label:'Giraffe',mr:'जिराफ',emoji:'🦒',theme:5},
-      {id:'a45',label:'Hippo',mr:'हिप्पो',emoji:'🦛',theme:12},
-      {id:'a46',label:'Camel',mr:'उंट',emoji:'🐪',theme:0},
-      {id:'a47',label:'Gorilla',mr:'गोरिला',emoji:'🦍',theme:1},
-      {id:'a48',label:'Bat',mr:'वटवाघूळ',emoji:'🦇',theme:1},
-      {id:'a49',label:'Kangaroo',mr:'कांगारू',emoji:'🦘',theme:0},
-      {id:'a50',label:'Sheep',mr:'मेंढी',emoji:'🐑',theme:13},
+      {id:'a25',label:'Crocodile',mr:'मगर',emoji:'🐊',theme:2},
+      {id:'a26',label:'Turtle',mr:'कासव',emoji:'🐢',theme:6},
+      {id:'a27',label:'Snake',mr:'साप',emoji:'🐍',theme:9},
+      {id:'a28',label:'Lizard',mr:'सरडा',emoji:'🦎',theme:6},
+      {id:'a29',label:'Whale',mr:'व्हेल',emoji:'🐋',theme:3},
+      {id:'a30',label:'Dolphin',mr:'डॉल्फिन',emoji:'🐬',theme:3},
+      {id:'a31',label:'Shark',mr:'शार्क',emoji:'🦈',theme:9},
+      {id:'a32',label:'Fish',mr:'मासा',emoji:'🐟',theme:3},
+      {id:'a33',label:'Octopus',mr:'ऑक्टोपस',emoji:'🐙',theme:8},
+      {id:'a34',label:'Crab',mr:'खेकडा',emoji:'🦀',theme:4},
+      {id:'a35',label:'Butterfly',mr:'फुलपाखरू',emoji:'🦋',theme:7},
+      {id:'a36',label:'Bee',mr:'मधमाशी',emoji:'🐝',theme:5},
+      {id:'a37',label:'Ladybug',mr:'लेडीबग',emoji:'🐞',theme:4},
+      {id:'a38',label:'Fox',mr:'कोल्हा',emoji:'🦊',theme:0},
+      {id:'a39',label:'Wolf',mr:'लांडगा',emoji:'🐺',theme:12},
+      {id:'a40',label:'Deer',mr:'हरिण',emoji:'🦌',theme:11},
+      {id:'a41',label:'Zebra',mr:'झेब्रा',emoji:'🦓',theme:13},
+      {id:'a42',label:'Giraffe',mr:'जिराफ',emoji:'🦒',theme:5},
+      {id:'a43',label:'Hippo',mr:'हिप्पो',emoji:'🦛',theme:12},
+      {id:'a44',label:'Camel',mr:'उंट',emoji:'🐪',theme:0},
+      {id:'a45',label:'Gorilla',mr:'गोरिला',emoji:'🦍',theme:1},
+      {id:'a46',label:'Bat',mr:'वटवाघूळ',emoji:'🦇',theme:1},
+      {id:'a47',label:'Kangaroo',mr:'कांगारू',emoji:'🦘',theme:0},
+      {id:'a48',label:'Sheep',mr:'मेंढी',emoji:'🐑',theme:13},
+      {id:'a49',label:'Goat',mr:'शेळी',emoji:'🐐',theme:5},
+      {id:'a50',label:'Buffalo',mr:'म्हैस',emoji:'🦬',theme:11},
+      {id:'a51',label:'Rhino',mr:'गेंडा',emoji:'🦏',theme:13},
+      {id:'a52',label:'Llama',mr:'लामा',emoji:'🦙',theme:5},
+      {id:'a53',label:'Raccoon',mr:'रॅकून',emoji:'🦝',theme:12},
+      {id:'a54',label:'Hedgehog',mr:'साळिंदर',emoji:'🦔',theme:11},
+      {id:'a55',label:'Otter',mr:'ऊद',emoji:'🦦',theme:11},
+      {id:'a56',label:'Skunk',mr:'स्कंक',emoji:'🦨',theme:13},
+      {id:'a57',label:'Sloth',mr:'स्लॉथ',emoji:'🦥',theme:11},
+      {id:'a58',label:'Hamster',mr:'हॅमस्टर',emoji:'🐹',theme:14},
+      {id:'a59',label:'Mouse',mr:'उंदीर',emoji:'🐭',theme:13},
+      {id:'a60',label:'Chipmunk',mr:'चिपमंक',emoji:'🐿️',theme:0},
+      {id:'a61',label:'Seal',mr:'सील',emoji:'🦭',theme:3},
+      {id:'a62',label:'Polar Bear',mr:'ध्रुवीय अस्वल',emoji:'🐻‍❄️',theme:13},
+      {id:'a63',label:'Turkey',mr:'टर्की',emoji:'🦃',theme:11},
+      {id:'a64',label:'Lobster',mr:'लॉबस्टर',emoji:'🦞',theme:4},
+      {id:'a65',label:'Shrimp',mr:'कोळंबी',emoji:'🦐',theme:14},
+      {id:'a66',label:'Snail',mr:'गोगलगाय',emoji:'🐌',theme:6},
+      {id:'a67',label:'Ant',mr:'मुंगी',emoji:'🐜',theme:0},
+      {id:'a68',label:'Spider',mr:'कोळी',emoji:'🕷️',theme:1},
+      {id:'a69',label:'Scorpion',mr:'विंचू',emoji:'🦂',theme:0},
+      {id:'a70',label:'Cricket',mr:'रातकिडा',emoji:'🦗',theme:6},
+      {id:'a71',label:'Mosquito',mr:'डास',emoji:'🦟',theme:9},
+      {id:'a72',label:'Worm',mr:'अळी',emoji:'🪱',theme:6},
+      {id:'a73',label:'T-Rex',mr:'टी-रेक्स',emoji:'🦖',theme:6},
+      {id:'a74',label:'Mammoth',mr:'मॅमथ',emoji:'🦣',theme:11},
+      {id:'a75',label:'Jellyfish',mr:'जेलीफिश',emoji:'🪼',theme:7},
     ]
   },
   {
@@ -472,7 +506,7 @@ const CATEGORIES = [
       {id:'p11',label:'Maple Leaf',mr:'मेपल पान',emoji:'🍁',theme:0},
       {id:'p12',label:'Bamboo',mr:'बांबू',emoji:'🎋',theme:6},
       {id:'p13',label:'Corn',mr:'मका',emoji:'🌽',theme:5},
-      {id:'p14',label:'Hot Pepper',mr:'मिरची',emoji:'🌶️',theme:4},
+      {id:'p14',label:'Chilli',mr:'मिरची',emoji:'🌶️',theme:4},
       {id:'p15',label:'Broccoli',mr:'ब्रोकोली',emoji:'🥦',theme:2},
       {id:'p16',label:'Eggplant',mr:'वांगे',emoji:'🍆',theme:1},
       {id:'p17',label:'Tomato',mr:'टोमॅटो',emoji:'🍅',theme:4},
@@ -489,6 +523,26 @@ const CATEGORIES = [
       {id:'p28',label:'Lettuce',mr:'कोशिंबिरीची भाजी',emoji:'🥬',theme:2},
       {id:'p29',label:'Peanuts',mr:'शेंगदाणे',emoji:'🥜',theme:0},
       {id:'p30',label:'Beans',mr:'शेंगा',emoji:'🫘',theme:11},
+      {id:'p31',label:'Evergreen',mr:'सदाहरित झाड',emoji:'🌲',theme:2},
+      {id:'p32',label:'Leaf',mr:'पान',emoji:'🍃',theme:2},
+      {id:'p33',label:'Fallen Leaf',mr:'गळलेले पान',emoji:'🍂',theme:0},
+      {id:'p34',label:'Shamrock',mr:'शेमरॉक',emoji:'☘️',theme:2},
+      {id:'p35',label:'Four Leaf',mr:'चार पाकळ्या',emoji:'🍀',theme:2},
+      {id:'p36',label:'Bouquet',mr:'फुलांचा गुच्छ',emoji:'💐',theme:7},
+      {id:'p37',label:'White Flower',mr:'पांढरे फूल',emoji:'💮',theme:13},
+      {id:'p38',label:'Wood',mr:'लाकूड',emoji:'🪵',theme:0},
+      {id:'p39',label:'Chestnut',mr:'चेस्टनट',emoji:'🌰',theme:0},
+      {id:'p40',label:'Bell Pepper',mr:'ढोबळी मिरची',emoji:'🫑',theme:2},
+      {id:'p41',label:'Sweet Potato',mr:'रताळे',emoji:'🍠',theme:0},
+      {id:'p42',label:'Zucchini',mr:'झुकिनी',emoji:'🫛',theme:2},
+      {id:'p43',label:'Cabbage',mr:'कोबी',emoji:'🥗',theme:6},
+      {id:'p44',label:'Olive',mr:'ऑलिव',emoji:'🫒',theme:6},
+      {id:'p45',label:'Pear',mr:'नाशपाती',emoji:'🍐',theme:6},
+      {id:'p46',label:'Wilted',mr:'कोमेजलेले फूल',emoji:'🥀',theme:4},
+      {id:'p47',label:'Dandelion',mr:'डँडेलियन',emoji:'💛',theme:5},
+      {id:'p48',label:'Sprout',mr:'अंकुर',emoji:'🫚',theme:6},
+      {id:'p49',label:'Cherry Tree',mr:'चेरीचे झाड',emoji:'🍒',theme:7},
+      {id:'p50',label:'Coconut',mr:'नारळ',emoji:'🥥',theme:13},
     ]
   },
   {
@@ -525,6 +579,51 @@ const CATEGORIES = [
       {id:'d28',label:'Ruler',mr:'पट्टी',emoji:'📏',theme:5},
       {id:'d29',label:'Calendar',mr:'दिनदर्शिका',emoji:'📅',theme:3},
       {id:'d30',label:'Newspaper',mr:'वर्तमानपत्र',emoji:'📰',theme:13},
+      {id:'d31',label:'Notebook',mr:'वही',emoji:'📓',theme:9},
+      {id:'d32',label:'Eraser',mr:'खोडरबर',emoji:'🧹',theme:6},
+      {id:'d33',label:'Candle',mr:'मेणबत्ती',emoji:'🕯️',theme:0},
+      {id:'d34',label:'Mirror',mr:'आरसा',emoji:'🪞',theme:3},
+      {id:'d35',label:'Purse',mr:'पर्स',emoji:'👜',theme:7},
+      {id:'d36',label:'Watch',mr:'मनगटी घड्याळ',emoji:'⌚',theme:11},
+      {id:'d37',label:'Bottle',mr:'बाटली',emoji:'🍼',theme:3},
+      {id:'d38',label:'Glass',mr:'ग्लास',emoji:'🥤',theme:3},
+      {id:'d39',label:'Knife',mr:'सुरी',emoji:'🔪',theme:13},
+      {id:'d40',label:'Sofa',mr:'सोफा',emoji:'🛋️',theme:11},
+      {id:'d41',label:'Dress',mr:'फ्रॉक',emoji:'👗',theme:7},
+      {id:'d42',label:'Socks',mr:'मोजे',emoji:'🧦',theme:14},
+      {id:'d43',label:'Scarf',mr:'स्कार्फ',emoji:'🧣',theme:4},
+      {id:'d44',label:'Gloves',mr:'हातमोजे',emoji:'🧤',theme:11},
+      {id:'d45',label:'Boots',mr:'बूट',emoji:'👢',theme:11},
+      {id:'d46',label:'Sandals',mr:'चप्पल',emoji:'🩴',theme:0},
+      {id:'d47',label:'Cap',mr:'टोपी',emoji:'🧢',theme:3},
+      {id:'d48',label:'Sunglasses',mr:'गॉगल',emoji:'🕶️',theme:9},
+      {id:'d49',label:'Towel',mr:'टॉवेल',emoji:'🧻',theme:13},
+      {id:'d50',label:'Shampoo',mr:'शाम्पू',emoji:'🧴',theme:7},
+      {id:'d51',label:'Comb',mr:'कंगवा',emoji:'🪮',theme:0},
+      {id:'d52',label:'Bandage',mr:'पट्टी',emoji:'🩹',theme:5},
+      {id:'d53',label:'Pill',mr:'गोळी',emoji:'💊',theme:4},
+      {id:'d54',label:'Thermometer',mr:'ताप मापक',emoji:'🌡️',theme:4},
+      {id:'d55',label:'Bulb',mr:'बल्ब',emoji:'🔆',theme:5},
+      {id:'d56',label:'Lock',mr:'कुलूप',emoji:'🔒',theme:11},
+      {id:'d57',label:'Torch',mr:'टॉर्च',emoji:'🔦',theme:0},
+      {id:'d58',label:'Wrench',mr:'रेंच',emoji:'🔧',theme:13},
+      {id:'d59',label:'Stapler',mr:'स्टेपलर',emoji:'📍',theme:4},
+      {id:'d60',label:'Paperclip',mr:'पेपरक्लिप',emoji:'📎',theme:13},
+      {id:'d61',label:'Envelope',mr:'पाकीट',emoji:'✉️',theme:13},
+      {id:'d62',label:'Folder',mr:'फोल्डर',emoji:'📁',theme:5},
+      {id:'d63',label:'Printer',mr:'प्रिंटर',emoji:'🖨️',theme:13},
+      {id:'d64',label:'TV',mr:'टीव्ही',emoji:'📺',theme:9},
+      {id:'d65',label:'Radio',mr:'रेडिओ',emoji:'📻',theme:9},
+      {id:'d66',label:'Speaker',mr:'स्पीकर',emoji:'🔊',theme:9},
+      {id:'d67',label:'Microphone',mr:'माइक',emoji:'🎙️',theme:11},
+      {id:'d68',label:'Plug',mr:'प्लग',emoji:'🔌',theme:11},
+      {id:'d69',label:'Magnet',mr:'चुंबक',emoji:'🧲',theme:4},
+      {id:'d70',label:'Ladder',mr:'शिडी',emoji:'🪜',theme:0},
+      {id:'d71',label:'Door',mr:'दरवाजा',emoji:'🚪',theme:11},
+      {id:'d72',label:'Window',mr:'खिडकी',emoji:'🪟',theme:3},
+      {id:'d73',label:'Axe',mr:'कुऱ्हाड',emoji:'🪓',theme:11},
+      {id:'d74',label:'Toolbox',mr:'साधनांची पेटी',emoji:'🧰',theme:0},
+      {id:'d75',label:'Lipstick',mr:'लिपस्टिक',emoji:'💄',theme:4},
     ]
   },
   {
@@ -551,6 +650,31 @@ const CATEGORIES = [
       {id:'v18',label:'School Bus',mr:'शाळेची बस',emoji:'🚍',theme:5},
       {id:'v19',label:'Subway',mr:'भुयारी रेल्वे',emoji:'🚇',theme:9},
       {id:'v20',label:'Bullet Train',mr:'बुलेट ट्रेन',emoji:'🚅',theme:3},
+      {id:'v21',label:'Racing Car',mr:'रेसिंग कार',emoji:'🏎️',theme:4},
+      {id:'v22',label:'Pickup',mr:'पिकअप',emoji:'🛻',theme:11},
+      {id:'v23',label:'Van',mr:'व्हॅन',emoji:'🚙',theme:11},
+      {id:'v24',label:'Speedboat',mr:'स्पीडबोट',emoji:'🚤',theme:3},
+      {id:'v25',label:'UFO',mr:'यूएफओ',emoji:'🛸',theme:9},
+      {id:'v26',label:'Hot Balloon',mr:'हवाई फुगा',emoji:'🎈',theme:4},
+      {id:'v27',label:'Parachute',mr:'पॅराशूट',emoji:'🪂',theme:3},
+      {id:'v28',label:'Canoe',mr:'छोटी होडी',emoji:'🛶',theme:11},
+      {id:'v29',label:'Skateboard',mr:'स्केटबोर्ड',emoji:'🛹',theme:9},
+      {id:'v30',label:'Kick Scooter',mr:'किक स्कूटर',emoji:'🛴',theme:6},
+      {id:'v31',label:'Rollerskates',mr:'रोलरस्केट्स',emoji:'🛼',theme:7},
+      {id:'v32',label:'Sled',mr:'स्लेज',emoji:'🛷',theme:13},
+      {id:'v33',label:'Tram',mr:'ट्राम',emoji:'🚋',theme:6},
+      {id:'v34',label:'Cable Car',mr:'केबल कार',emoji:'🚡',theme:4},
+      {id:'v35',label:'Monorail',mr:'मोनोरेल',emoji:'🚝',theme:13},
+      {id:'v36',label:'Satellite',mr:'उपग्रह',emoji:'🛰️',theme:9},
+      {id:'v37',label:'Ferry',mr:'फेरी',emoji:'⛴️',theme:3},
+      {id:'v38',label:'Rickshaw',mr:'रिक्षा',emoji:'🛺',theme:0},
+      {id:'v39',label:'Crane',mr:'क्रेन',emoji:'🏗️',theme:5},
+      {id:'v40',label:'Submarine',mr:'पाणबुडी',emoji:'🛳️',theme:9},
+      {id:'v41',label:'Lorry',mr:'मालट्रक',emoji:'🚚',theme:11},
+      {id:'v42',label:'Minibus',mr:'मिनीबस',emoji:'🚐',theme:3},
+      {id:'v43',label:'Trolley',mr:'ट्रॉली',emoji:'🚎',theme:9},
+      {id:'v44',label:'Snowmobile',mr:'स्नोमोबाइल',emoji:'🏔️',theme:3},
+      {id:'v45',label:'Hovercraft',mr:'होव्हरक्राफ्ट',emoji:'🛥️',theme:9},
     ]
   },
   {
@@ -587,6 +711,41 @@ const CATEGORIES = [
       {id:'f28',label:'Kiwi',mr:'कीवी',emoji:'🥝',theme:6},
       {id:'f29',label:'Chocolate',mr:'चॉकलेट',emoji:'🍫',theme:11},
       {id:'f30',label:'Donut',mr:'डोनट',emoji:'🍩',theme:0},
+      {id:'f31',label:'Blueberry',mr:'ब्लूबेरी',emoji:'🫐',theme:1},
+      {id:'f32',label:'Green Apple',mr:'हिरवे सफरचंद',emoji:'🍏',theme:2},
+      {id:'f33',label:'Pear',mr:'नाशपाती',emoji:'🍐',theme:6},
+      {id:'f34',label:'Melon',mr:'खरबूज',emoji:'🍈',theme:2},
+      {id:'f35',label:'Avocado',mr:'अवोकाडो',emoji:'🥑',theme:6},
+      {id:'f36',label:'Tomato',mr:'टोमॅटो',emoji:'🍅',theme:4},
+      {id:'f37',label:'Sandwich',mr:'सँडविच',emoji:'🥪',theme:5},
+      {id:'f38',label:'Taco',mr:'टॅको',emoji:'🌮',theme:0},
+      {id:'f39',label:'Hot Dog',mr:'हॉट डॉग',emoji:'🌭',theme:0},
+      {id:'f40',label:'Salad',mr:'सलाड',emoji:'🥗',theme:2},
+      {id:'f41',label:'Soup',mr:'सूप',emoji:'🍲',theme:0},
+      {id:'f42',label:'Pancake',mr:'पॅनकेक',emoji:'🥞',theme:0},
+      {id:'f43',label:'Waffle',mr:'वाफल',emoji:'🧇',theme:5},
+      {id:'f44',label:'Cupcake',mr:'कपकेक',emoji:'🧁',theme:7},
+      {id:'f45',label:'Cheese',mr:'चीज',emoji:'🧀',theme:5},
+      {id:'f46',label:'Chicken',mr:'चिकन',emoji:'🍗',theme:5},
+      {id:'f47',label:'Steak',mr:'स्टेक',emoji:'🥩',theme:4},
+      {id:'f48',label:'Croissant',mr:'क्रोसां',emoji:'🥐',theme:5},
+      {id:'f49',label:'Pretzel',mr:'प्रेत्झेल',emoji:'🥨',theme:0},
+      {id:'f50',label:'Bagel',mr:'बेगल',emoji:'🥯',theme:5},
+      {id:'f51',label:'Tea',mr:'चहा',emoji:'🍵',theme:6},
+      {id:'f52',label:'Juice',mr:'रस',emoji:'🧃',theme:0},
+      {id:'f53',label:'Smoothie',mr:'स्मूदी',emoji:'🥤',theme:4},
+      {id:'f54',label:'Water',mr:'पाणी',emoji:'💧',theme:3},
+      {id:'f55',label:'Lollipop',mr:'लॉलीपॉप',emoji:'🍭',theme:7},
+      {id:'f56',label:'Candy',mr:'कँडी',emoji:'🍬',theme:4},
+      {id:'f57',label:'Corn',mr:'मका',emoji:'🌽',theme:5},
+      {id:'f58',label:'Carrot',mr:'गाजर',emoji:'🥕',theme:0},
+      {id:'f59',label:'Broccoli',mr:'ब्रोकोली',emoji:'🥦',theme:2},
+      {id:'f60',label:'Mushroom',mr:'अळंबी',emoji:'🍄',theme:0},
+      {id:'f61',label:'Ramen',mr:'रामेन',emoji:'🥣',theme:0},
+      {id:'f62',label:'Dumplings',mr:'मोमोज',emoji:'🥟',theme:13},
+      {id:'f63',label:'Bento',mr:'बेंटो',emoji:'🍱',theme:6},
+      {id:'f64',label:'Curry',mr:'करी',emoji:'🍛',theme:0},
+      {id:'f65',label:'Peanut',mr:'शेंगदाणे',emoji:'🥜',theme:0},
     ]
   },
   {
@@ -613,6 +772,36 @@ const CATEGORIES = [
       {id:'s18',label:'Trophy',mr:'ट्रॉफी',emoji:'🏆',theme:5},
       {id:'s19',label:'Medal',mr:'पदक',emoji:'🥇',theme:0},
       {id:'s20',label:'Bowling',mr:'बॉलिंग',emoji:'🎳',theme:13},
+      {id:'s21',label:'Rugby',mr:'रग्बी',emoji:'🏉',theme:0},
+      {id:'s22',label:'Table Tennis',mr:'टेबल टेनिस',emoji:'🏓',theme:4},
+      {id:'s23',label:'Martial Arts',mr:'मार्शल आर्ट्स',emoji:'🥋',theme:9},
+      {id:'s24',label:'Weightlifting',mr:'वेटलिफ्टिंग',emoji:'🏋️',theme:11},
+      {id:'s25',label:'Rock Climbing',mr:'रॉक क्लाइंबिंग',emoji:'🧗',theme:0},
+      {id:'s26',label:'Skateboard',mr:'स्केटबोर्ड',emoji:'🛹',theme:9},
+      {id:'s27',label:'Surfing',mr:'सर्फिंग',emoji:'🏄',theme:3},
+      {id:'s28',label:'Rowing',mr:'नौकायन',emoji:'🚣',theme:3},
+      {id:'s29',label:'Skiing',mr:'स्कीइंग',emoji:'⛷️',theme:3},
+      {id:'s30',label:'Snowboard',mr:'स्नोबोर्ड',emoji:'🏂',theme:3},
+      {id:'s31',label:'Horse Riding',mr:'घोडेस्वारी',emoji:'🏇',theme:0},
+      {id:'s32',label:'Fishing',mr:'मासेमारी',emoji:'🎣',theme:3},
+      {id:'s33',label:'Scuba Diving',mr:'स्कुबा डायव्हिंग',emoji:'🤿',theme:3},
+      {id:'s34',label:'Skydiving',mr:'स्कायडायव्हिंग',emoji:'🪂',theme:3},
+      {id:'s35',label:'Billiards',mr:'बिलियर्ड्स',emoji:'🎱',theme:9},
+      {id:'s36',label:'Darts',mr:'डार्ट्स',emoji:'🎯',theme:4},
+      {id:'s37',label:'Chess',mr:'बुद्धिबळ',emoji:'♟️',theme:13},
+      {id:'s38',label:'Judo',mr:'ज्युडो',emoji:'🎽',theme:11},
+      {id:'s39',label:'Karate',mr:'कराटे',emoji:'👊',theme:4},
+      {id:'s40',label:'Sumo',mr:'सूमो',emoji:'🤼',theme:0},
+      {id:'s41',label:'Silver',mr:'रौप्य पदक',emoji:'🥈',theme:13},
+      {id:'s42',label:'Bronze',mr:'कांस्य पदक',emoji:'🥉',theme:0},
+      {id:'s43',label:'Stadium',mr:'स्टेडियम',emoji:'🏟️',theme:6},
+      {id:'s44',label:'Whistle',mr:'शिट्टी',emoji:'📯',theme:4},
+      {id:'s45',label:'Handball',mr:'हँडबॉल',emoji:'🤾',theme:5},
+      {id:'s46',label:'Frisbee',mr:'फ्रिसबी',emoji:'🪃',theme:3},
+      {id:'s47',label:'Field Hockey',mr:'फील्ड हॉकी',emoji:'🏑',theme:6},
+      {id:'s48',label:'Lacrosse',mr:'लॅक्रोस',emoji:'🥍',theme:2},
+      {id:'s49',label:'Softball',mr:'सॉफ्टबॉल',emoji:'🥎',theme:13},
+      {id:'s50',label:'Polo',mr:'पोलो',emoji:'🎠',theme:3},
     ]
   },
   {
@@ -639,6 +828,36 @@ const CATEGORIES = [
       {id:'w18',label:'Volcano',mr:'ज्वालामुखी',emoji:'🌋',theme:4},
       {id:'w19',label:'Hurricane',mr:'चक्रीवादळ',emoji:'🌀',theme:9},
       {id:'w20',label:'Sunny',mr:'ऊन',emoji:'🌤️',theme:5},
+      {id:'w21',label:'Partly Cloudy',mr:'अर्धवट ढगाळ',emoji:'⛅',theme:13},
+      {id:'w22',label:'Drizzle',mr:'रिमझिम पाऊस',emoji:'🌦️',theme:3},
+      {id:'w23',label:'Snowman',mr:'बर्फाचा माणूस',emoji:'☃️',theme:3},
+      {id:'w24',label:'Ice',mr:'बर्फ',emoji:'🧊',theme:3},
+      {id:'w25',label:'Full Moon',mr:'पौर्णिमेचा चंद्र',emoji:'🌕',theme:5},
+      {id:'w26',label:'New Moon',mr:'अमावास्या',emoji:'🌑',theme:9},
+      {id:'w27',label:'Crescent',mr:'चंद्रकोर',emoji:'🌛',theme:1},
+      {id:'w28',label:'Shooting Star',mr:'तुटता तारा',emoji:'🌠',theme:9},
+      {id:'w29',label:'Milky Way',mr:'आकाशगंगा',emoji:'🌌',theme:9},
+      {id:'w30',label:'Sunrise Beach',mr:'समुद्र किनारा',emoji:'🏖️',theme:5},
+      {id:'w31',label:'Heatwave',mr:'उष्णतेची लाट',emoji:'🔥',theme:4},
+      {id:'w32',label:'Spring',mr:'वसंत ऋतू',emoji:'🌱',theme:6},
+      {id:'w33',label:'Summer',mr:'उन्हाळा',emoji:'🌞',theme:5},
+      {id:'w34',label:'Autumn',mr:'शरद ऋतू',emoji:'🍂',theme:0},
+      {id:'w35',label:'Winter',mr:'हिवाळा',emoji:'🧣',theme:3},
+      {id:'w36',label:'Monsoon',mr:'पावसाळा',emoji:'🌂',theme:3},
+      {id:'w37',label:'Dawn',mr:'पहाट',emoji:'🌄',theme:5},
+      {id:'w38',label:'Dusk',mr:'संध्याकाळ',emoji:'🌆',theme:0},
+      {id:'w39',label:'Night Sky',mr:'रात्रीचे आकाश',emoji:'🌃',theme:9},
+      {id:'w40',label:'Aurora',mr:'ध्रुवीय प्रकाश',emoji:'✨',theme:9},
+      {id:'w41',label:'Flood',mr:'पूर',emoji:'🌊',theme:3},
+      {id:'w42',label:'Drought',mr:'दुष्काळ',emoji:'🏜️',theme:0},
+      {id:'w43',label:'Earthquake',mr:'भूकंप',emoji:'💢',theme:4},
+      {id:'w44',label:'Sandstorm',mr:'वाळूचे वादळ',emoji:'💨',theme:0},
+      {id:'w45',label:'Morning Dew',mr:'दवबिंदू',emoji:'🫧',theme:3},
+      {id:'w46',label:'Frost',mr:'दंव',emoji:'🌬️',theme:3},
+      {id:'w47',label:'Wave',mr:'लाट',emoji:'🏄',theme:3},
+      {id:'w48',label:'Sunshine',mr:'सूर्यप्रकाश',emoji:'🔆',theme:5},
+      {id:'w49',label:'Waning Moon',mr:'क्षीण चंद्र',emoji:'🌘',theme:1},
+      {id:'w50',label:'Comet',mr:'धूमकेतू',emoji:'☄️',theme:0},
     ]
   },
   {
@@ -658,43 +877,258 @@ const CATEGORIES = [
       {id:'sp11',label:'Comet',mr:'धूमकेतू',emoji:'☄️',theme:0},
       {id:'sp12',label:'Galaxy',mr:'आकाशगंगा',emoji:'🌌',theme:9},
       {id:'sp13',label:'Telescope',mr:'दुर्बीण',emoji:'🔭',theme:1},
-      {id:'sp14',label:'Meteor',mr:'उल्का',emoji:'☄️',theme:11},
+      {id:'sp14',label:'Meteor',mr:'उल्का',emoji:'🪨',theme:11},
       {id:'sp15',label:'Black Hole',mr:'कृष्णविवर',emoji:'🕳️',theme:9},
-      {id:'sp16',label:'Astronaut',mr:'अंतराळवीर',emoji:'🧑‍🚀',theme:3},
-      {id:'sp17',label:'Space Station',mr:'अवकाश स्थानक',emoji:'🛸',theme:3},
+      {id:'sp16',label:'Space Suit',mr:'अवकाश पोशाख',emoji:'🧑‍🚀',theme:3},
+      {id:'sp17',label:'Space Station',mr:'अवकाश स्थानक',emoji:'🛩️',theme:3},
       {id:'sp18',label:'Mars',mr:'मंगळ',emoji:'🔴',theme:4},
-      {id:'sp19',label:'Saturn',mr:'शनी',emoji:'🪐',theme:5},
-      {id:'sp20',label:'Jupiter',mr:'गुरू',emoji:'🪐',theme:0},
+      {id:'sp19',label:'Saturn',mr:'शनी',emoji:'🔵',theme:5},
+      {id:'sp20',label:'Jupiter',mr:'गुरू',emoji:'🟠',theme:0},
+      {id:'sp21',label:'Glowing Star',mr:'चमकता तारा',emoji:'✨',theme:5},
+      {id:'sp22',label:'Shooting Star',mr:'तुटता तारा',emoji:'🌠',theme:9},
+      {id:'sp23',label:'Full Moon',mr:'पौर्णिमा',emoji:'🌕',theme:5},
+      {id:'sp24',label:'Crescent Moon',mr:'चंद्रकोर',emoji:'🌜',theme:5},
+      {id:'sp25',label:'Venus',mr:'शुक्र',emoji:'🔸',theme:5},
+      {id:'sp26',label:'Mercury',mr:'बुध',emoji:'⚪',theme:13},
+      {id:'sp27',label:'Neptune',mr:'नेपच्यून',emoji:'💙',theme:3},
+      {id:'sp28',label:'Asteroid',mr:'लघुग्रह',emoji:'💫',theme:0},
+      {id:'sp29',label:'Meteorite',mr:'उल्कापिंड',emoji:'🔥',theme:11},
+      {id:'sp30',label:'Supernova',mr:'सुपरनोव्हा',emoji:'💥',theme:4},
+      {id:'sp31',label:'Nebula',mr:'नेब्युला',emoji:'🎇',theme:8},
+      {id:'sp32',label:'Orbit',mr:'कक्षा',emoji:'🔄',theme:3},
+      {id:'sp33',label:'Launch Pad',mr:'प्रक्षेपण स्थळ',emoji:'🏗️',theme:4},
+      {id:'sp34',label:'Solar Panel',mr:'सौर पटल',emoji:'☀️',theme:5},
+      {id:'sp35',label:'Countdown',mr:'उलटी गिनती',emoji:'⏱️',theme:4},
+      {id:'sp36',label:'Liftoff',mr:'उड्डाण',emoji:'🔝',theme:0},
+      {id:'sp37',label:'Mars Rover',mr:'मंगळ रोव्हर',emoji:'🤖',theme:4},
+      {id:'sp38',label:'Probe',mr:'अवकाश यान',emoji:'📡',theme:9},
+      {id:'sp39',label:'Milky Way',mr:'आकाशगंगा',emoji:'🎑',theme:1},
+      {id:'sp40',label:'Universe',mr:'विश्व',emoji:'🔮',theme:1},
+      {id:'sp41',label:'Big Bang',mr:'महास्फोट',emoji:'🌋',theme:4},
+      {id:'sp42',label:'Zero Gravity',mr:'शून्य गुरुत्व',emoji:'🤸',theme:9},
+      {id:'sp43',label:'Space Walk',mr:'अवकाश चाल',emoji:'🚶',theme:9},
+      {id:'sp44',label:'Radio Wave',mr:'रेडिओ लहरी',emoji:'📻',theme:9},
+      {id:'sp45',label:'Space Age',mr:'अवकाश युग',emoji:'🏆',theme:5},
+    ]
+  },
+  
+  {
+    id:'actions', name:'Action Words', nameMr:'क्रियापदे', icon:'🏃',
+    color:'linear-gradient(145deg,#f77062,#fe5196)',
+    items:[
+      {id:'ac1',label:'Run',mr:'धावणे',emoji:'🏃',theme:4},
+      {id:'ac2',label:'Jump',mr:'उडी मारणे',emoji:'🦘',theme:0},
+      {id:'ac3',label:'Eat',mr:'खाणे',emoji:'🍽️',theme:5},
+      {id:'ac4',label:'Sleep',mr:'झोपणे',emoji:'😴',theme:1},
+      {id:'ac5',label:'Swim',mr:'पोहणे',emoji:'🏊',theme:3},
+      {id:'ac6',label:'Fly',mr:'उडणे',emoji:'🕊️',theme:9},
+      {id:'ac7',label:'Dance',mr:'नाचणे',emoji:'💃',theme:7},
+      {id:'ac8',label:'Sing',mr:'गाणे',emoji:'🎤',theme:8},
+      {id:'ac9',label:'Read',mr:'वाचणे',emoji:'📖',theme:3},
+      {id:'ac10',label:'Write',mr:'लिहिणे',emoji:'✏️',theme:5},
+      {id:'ac11',label:'Climb',mr:'चढणे',emoji:'🧗',theme:0},
+      {id:'ac12',label:'Cook',mr:'स्वयंपाक करणे',emoji:'👨‍🍳',theme:0},
+      {id:'ac13',label:'Draw',mr:'रेखाटणे',emoji:'🖍️',theme:7},
+      {id:'ac14',label:'Play',mr:'खेळणे',emoji:'⚽',theme:2},
+      {id:'ac15',label:'Laugh',mr:'हसणे',emoji:'😂',theme:5},
+      {id:'ac16',label:'Cry',mr:'रडणे',emoji:'😢',theme:3},
+      {id:'ac17',label:'Walk',mr:'चालणे',emoji:'🚶',theme:6},
+      {id:'ac18',label:'Sit',mr:'बसणे',emoji:'🪑',theme:11},
+      {id:'ac19',label:'Stand',mr:'उभे राहणे',emoji:'🧍',theme:13},
+      {id:'ac20',label:'Talk',mr:'बोलणे',emoji:'💬',theme:9},
+      {id:'ac21',label:'Listen',mr:'ऐकणे',emoji:'👂',theme:1},
+      {id:'ac22',label:'Look',mr:'पाहणे',emoji:'👀',theme:9},
+      {id:'ac23',label:'Think',mr:'विचार करणे',emoji:'🤔',theme:12},
+      {id:'ac24',label:'Smile',mr:'हसणे',emoji:'😊',theme:5},
+      {id:'ac25',label:'Clap',mr:'टाळ्या वाजवणे',emoji:'👏',theme:0},
+      {id:'ac26',label:'Drink',mr:'पिणे',emoji:'🥤',theme:3},
+      {id:'ac27',label:'Throw',mr:'फेकणे',emoji:'🤾',theme:4},
+      {id:'ac28',label:'Catch',mr:'पकडणे',emoji:'🫳',theme:2},
+      {id:'ac29',label:'Kick',mr:'लाथ मारणे',emoji:'🦵',theme:0},
+      {id:'ac30',label:'Push',mr:'ढकलणे',emoji:'🫸',theme:4},
+      {id:'ac31',label:'Pull',mr:'ओढणे',emoji:'🫷',theme:11},
+      {id:'ac32',label:'Open',mr:'उघडणे',emoji:'🔓',theme:2},
+      {id:'ac33',label:'Close',mr:'बंद करणे',emoji:'🔒',theme:9},
+      {id:'ac34',label:'Cut',mr:'कापणे',emoji:'✂️',theme:13},
+      {id:'ac35',label:'Paint',mr:'रंगवणे',emoji:'🎨',theme:8},
+      {id:'ac36',label:'Build',mr:'बांधणे',emoji:'🏗️',theme:5},
+      {id:'ac37',label:'Break',mr:'तोडणे',emoji:'💥',theme:4},
+      {id:'ac38',label:'Clean',mr:'साफ करणे',emoji:'🧹',theme:6},
+      {id:'ac39',label:'Wash',mr:'धुणे',emoji:'🧼',theme:3},
+      {id:'ac40',label:'Buy',mr:'विकत घेणे',emoji:'🛍️',theme:7},
+      {id:'ac41',label:'Give',mr:'देणे',emoji:'🎁',theme:7},
+      {id:'ac42',label:'Take',mr:'घेणे',emoji:'🤲',theme:0},
+      {id:'ac43',label:'Help',mr:'मदत करणे',emoji:'🤝',theme:2},
+      {id:'ac44',label:'Learn',mr:'शिकणे',emoji:'🎓',theme:9},
+      {id:'ac45',label:'Teach',mr:'शिकवणे',emoji:'👨‍🏫',theme:3},
+      {id:'ac46',label:'Grow',mr:'वाढणे',emoji:'🌱',theme:6},
+      {id:'ac47',label:'Fall',mr:'पडणे',emoji:'🍂',theme:0},
+      {id:'ac48',label:'Wake',mr:'उठणे',emoji:'⏰',theme:5},
+      {id:'ac49',label:'Hide',mr:'लपणे',emoji:'🙈',theme:1},
+      {id:'ac50',label:'Seek',mr:'शोधणे',emoji:'🔍',theme:9},
+      {id:'ac51',label:'Hug',mr:'मिठी मारणे',emoji:'🤗',theme:7},
+      {id:'ac52',label:'Wave',mr:'हात हलवणे',emoji:'👋',theme:5},
+      {id:'ac53',label:'Point',mr:'बोट दाखवणे',emoji:'👆',theme:0},
+      {id:'ac54',label:'Count',mr:'मोजणे',emoji:'🔢',theme:3},
+      {id:'ac55',label:'Share',mr:'वाटणे',emoji:'🔗',theme:2},
+      {id:'ac56',label:'Choose',mr:'निवडणे',emoji:'☑️',theme:9},
+      {id:'ac57',label:'Carry',mr:'नेणे',emoji:'🧳',theme:11},
+      {id:'ac58',label:'Drop',mr:'सोडणे',emoji:'💧',theme:3},
+      {id:'ac59',label:'Pick',mr:'उचलणे',emoji:'🖐️',theme:6},
+      {id:'ac60',label:'Put',mr:'ठेवणे',emoji:'📦',theme:5},
+      {id:'ac61',label:'Mix',mr:'मिसळणे',emoji:'🥣',theme:0},
+      {id:'ac62',label:'Pour',mr:'ओतणे',emoji:'🫗',theme:3},
+      {id:'ac63',label:'Fill',mr:'भरणे',emoji:'🪣',theme:3},
+      {id:'ac64',label:'Blow',mr:'फुंकणे',emoji:'💨',theme:9},
+      {id:'ac65',label:'Spin',mr:'फिरणे',emoji:'🌀',theme:8},
+      {id:'ac66',label:'Hop',mr:'उड्या मारणे',emoji:'🐰',theme:14},
+      {id:'ac67',label:'Skip',mr:'उड्या घेत चालणे',emoji:'🎵',theme:7},
+      {id:'ac68',label:'Bend',mr:'वाकणे',emoji:'🙇',theme:11},
+      {id:'ac69',label:'Stretch',mr:'ताणणे',emoji:'🤸',theme:2},
+      {id:'ac70',label:'Shake',mr:'हलवणे',emoji:'🫱',theme:0},
+    ]
+  },
+  {
+    id:'words', name:'Everyday Words', nameMr:'रोजचे शब्द', icon:'💬',
+    color:'linear-gradient(145deg,#a18cd1,#fbc2eb)',
+    items:[
+      {id:'ew1',label:'Up',mr:'वर',emoji:'⬆️',theme:3},
+      {id:'ew2',label:'Down',mr:'खाली',emoji:'🔽',theme:9},
+      {id:'ew3',label:'In',mr:'आत',emoji:'📥',theme:2},
+      {id:'ew4',label:'Out',mr:'बाहेर',emoji:'📤',theme:0},
+      {id:'ew5',label:'Over',mr:'वरून',emoji:'🌉',theme:5},
+      {id:'ew6',label:'Under',mr:'खाली',emoji:'⬇️',theme:1},
+      {id:'ew7',label:'Here',mr:'इथे',emoji:'📍',theme:4},
+      {id:'ew8',label:'There',mr:'तिथे',emoji:'👉',theme:9},
+      {id:'ew9',label:'Near',mr:'जवळ',emoji:'🔍',theme:2},
+      {id:'ew10',label:'Far',mr:'दूर',emoji:'🔭',theme:9},
+      {id:'ew11',label:'Left',mr:'डावे',emoji:'⬅️',theme:3},
+      {id:'ew12',label:'Right',mr:'उजवे',emoji:'🔜',theme:4},
+      {id:'ew13',label:'Front',mr:'समोर',emoji:'⏩',theme:5},
+      {id:'ew14',label:'Back',mr:'मागे',emoji:'⏪',theme:11},
+      {id:'ew15',label:'Top',mr:'वरती',emoji:'🔝',theme:0},
+      {id:'ew16',label:'Bottom',mr:'तळाशी',emoji:'⏬',theme:9},
+      {id:'ew17',label:'Inside',mr:'आतमध्ये',emoji:'🏠',theme:2},
+      {id:'ew18',label:'Outside',mr:'बाहेर',emoji:'🌳',theme:6},
+      {id:'ew19',label:'Above',mr:'वरती',emoji:'☝️',theme:5},
+      {id:'ew20',label:'Below',mr:'खाली',emoji:'👇',theme:1},
+      {id:'ew21',label:'Hi',mr:'हाय',emoji:'👋',theme:5},
+      {id:'ew22',label:'Hello',mr:'नमस्ते',emoji:'😄',theme:7},
+      {id:'ew23',label:'Bye',mr:'निरोप',emoji:'🤚',theme:0},
+      {id:'ew24',label:'Yes',mr:'हो',emoji:'✅',theme:2},
+      {id:'ew25',label:'No',mr:'नाही',emoji:'❌',theme:4},
+      {id:'ew26',label:'Please',mr:'कृपया',emoji:'🙏',theme:14},
+      {id:'ew27',label:'Sorry',mr:'माफ करा',emoji:'😔',theme:1},
+      {id:'ew28',label:'Thanks',mr:'धन्यवाद',emoji:'😊',theme:5},
+      {id:'ew29',label:'Welcome',mr:'स्वागत',emoji:'🎊',theme:7},
+      {id:'ew30',label:'Good',mr:'चांगले',emoji:'👍',theme:2},
+      {id:'ew31',label:'Bad',mr:'वाईट',emoji:'👎',theme:4},
+      {id:'ew32',label:'Who',mr:'कोण',emoji:'🧑',theme:0},
+      {id:'ew33',label:'What',mr:'काय',emoji:'❓',theme:9},
+      {id:'ew34',label:'Where',mr:'कुठे',emoji:'🗺️',theme:3},
+      {id:'ew35',label:'When',mr:'केव्हा',emoji:'⏰',theme:5},
+      {id:'ew36',label:'Why',mr:'का',emoji:'🤔',theme:7},
+      {id:'ew37',label:'How',mr:'कसे',emoji:'💡',theme:5},
+      {id:'ew38',label:'Which',mr:'कोणते',emoji:'🔀',theme:9},
+      {id:'ew39',label:'And',mr:'आणि',emoji:'➕',theme:2},
+      {id:'ew40',label:'But',mr:'पण',emoji:'🔄',theme:11},
+      {id:'ew41',label:'Or',mr:'किंवा',emoji:'↔️',theme:0},
+      {id:'ew42',label:'Because',mr:'कारण',emoji:'💬',theme:1},
+      {id:'ew43',label:'This',mr:'हे',emoji:'👆',theme:5},
+      {id:'ew44',label:'That',mr:'ते',emoji:'👈',theme:0},
+      {id:'ew45',label:'Go',mr:'जाणे',emoji:'🚶',theme:2},
+      {id:'ew46',label:'Come',mr:'येणे',emoji:'🫴',theme:6},
+      {id:'ew47',label:'Stop',mr:'थांबणे',emoji:'🛑',theme:4},
+      {id:'ew48',label:'Fast',mr:'जलद',emoji:'⚡',theme:5},
+      {id:'ew49',label:'Slow',mr:'हळू',emoji:'🐢',theme:6},
+      {id:'ew50',label:'Forward',mr:'पुढे',emoji:'⏭️',theme:3},
+      {id:'ew51',label:'Backward',mr:'मागे',emoji:'⏮️',theme:11},
+      {id:'ew52',label:'Straight',mr:'सरळ',emoji:'➡️',theme:13},
+      {id:'ew53',label:'Turn',mr:'वळणे',emoji:'↩️',theme:0},
+      {id:'ew54',label:'Big',mr:'मोठे',emoji:'🐘',theme:4},
+      {id:'ew55',label:'Small',mr:'लहान',emoji:'🐭',theme:14},
+      {id:'ew56',label:'Tall',mr:'उंच',emoji:'🦒',theme:5},
+      {id:'ew57',label:'Short',mr:'बुटके',emoji:'🐧',theme:3},
+      {id:'ew58',label:'Hot',mr:'गरम',emoji:'🔥',theme:4},
+      {id:'ew59',label:'Cold',mr:'थंड',emoji:'❄️',theme:3},
+      {id:'ew60',label:'Happy',mr:'आनंदी',emoji:'😁',theme:5},
+      {id:'ew61',label:'Sad',mr:'दुःखी',emoji:'😢',theme:1},
+      {id:'ew62',label:'Angry',mr:'रागावलेले',emoji:'😠',theme:4},
+      {id:'ew63',label:'Scared',mr:'भीती',emoji:'😨',theme:9},
+      {id:'ew64',label:'Tired',mr:'थकलेले',emoji:'😪',theme:12},
+      {id:'ew65',label:'Hungry',mr:'भुकेलेले',emoji:'😋',theme:0},
+      {id:'ew66',label:'Full',mr:'भरलेले',emoji:'😌',theme:6},
+      {id:'ew67',label:'New',mr:'नवीन',emoji:'🆕',theme:3},
+      {id:'ew68',label:'Old',mr:'जुने',emoji:'📜',theme:11},
+      {id:'ew69',label:'Clean',mr:'स्वच्छ',emoji:'✨',theme:2},
+      {id:'ew70',label:'Dirty',mr:'घाण',emoji:'🫧',theme:0},
     ]
   },
 ];
 
-/* =====================================================================
-   TTS — Web Speech API
+/* TTS — Web Speech API with Indian English preference
 ===================================================================== */
 let currentWord = '';
 let speechSynth = window.speechSynthesis;
-let isSpeaking = false;
+let preferredVoice = null;
+
+/* Load voices and pick best Indian English option */
+function loadVoices() {
+  const voices = speechSynth.getVoices();
+  if (!voices.length) return;
+
+  /* Priority order: en-IN > en-GB > en-AU > any English */
+  const priority = ['en-IN', 'en_IN', 'en-GB', 'en_GB', 'en-AU', 'en'];
+
+  /* First try exact lang match */
+  for (const lang of priority) {
+    const v = voices.find(v => v.lang.toLowerCase().startsWith(lang.toLowerCase()));
+    if (v) { preferredVoice = v; break; }
+  }
+
+  /* If still nothing, just pick any English voice */
+  if (!preferredVoice) {
+    preferredVoice = voices.find(v => v.lang.toLowerCase().startsWith('en')) || voices[0];
+  }
+}
+
+/* Voices load async — listen for both events */
+speechSynth.onvoiceschanged = loadVoices;
+loadVoices();
 
 function speakWord(word) {
   if (!speechSynth) return;
   speechSynth.cancel();
+
+  /* Try loading voices again in case not ready */
+  if (!preferredVoice) loadVoices();
+
   const utt = new SpeechSynthesisUtterance(word);
-  utt.lang = 'en-US';
-  utt.rate = 0.85;
-  utt.pitch = 1.1;
+
+  if (preferredVoice) {
+    utt.voice = preferredVoice;
+    utt.lang = preferredVoice.lang;
+  } else {
+    utt.lang = 'en-IN';
+  }
+
+  /* Indian English tuning — slightly slower, natural pitch */
+  utt.rate = 0.78;
+  utt.pitch = 1.05;
   utt.volume = 1;
+
   const speakBtn = document.getElementById('speak-btn');
   utt.onstart = () => { speakBtn.classList.add('speaking-pulse'); };
   utt.onend = () => { speakBtn.classList.remove('speaking-pulse'); };
   utt.onerror = () => { speakBtn.classList.remove('speaking-pulse'); };
+
   speechSynth.speak(utt);
   currentWord = word;
 }
 
 /* Auto-speak with a slight delay so page doesn't conflict */
 function autoSpeak(word) {
-  setTimeout(() => speakWord(word), 400);
+  setTimeout(() => speakWord(word), 450);
 }
 
 /* =====================================================================
